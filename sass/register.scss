@@ -1,0 +1,9 @@
+@import "./mixin";
+* {
+  @include defaultReset;
+}
+
+:root {
+  @include formDesign;
+  @include links;
+}

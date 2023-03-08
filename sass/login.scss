@@ -1,0 +1,29 @@
+@import "./mixin";
+* {
+  @include defaultReset;
+}
+
+:root {
+  @include formDesign;
+  @include links;
+}
+
+.loginForm {
+  height: inherit;
+  width: inherit;
+  border-radius: 18px;
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(127, 67, 67);
+}
+
+#loginFormUsername,
+#loginFormPassword {
+  font-weight: bolder;
+  font-size: 15px;
+  height: auto;
+  width: 13rem;
+  padding: 15px;
+  border-radius: 8px;
+}

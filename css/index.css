@@ -1,0 +1,44 @@
+* {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+:root .welcomeDiv {
+  border-radius: 18px;
+  border: solid rgba(0, 0, 0, 0.805) 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 330px;
+  height: 500px;
+  background-color: rgb(93, 2, 46);
+}
+:root .welcomeDiv h1 {
+  color: rgba(255, 255, 255, 0.762);
+}
+:root .welcomeDiv button {
+  background-color: rgba(0, 0, 0, 0.715);
+  color: white;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 15px;
+  height: auto;
+  width: 15rem;
+  padding: 15px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+:root .welcomeDiv button:hover {
+  cursor: pointer;
+  background-color: rgb(21, 221, 21);
+}
+:root a,
+:root a:visited,
+:root a:hover,
+:root a:active {
+  color: rgba(255, 255, 255, 0.749);
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=index.css.map */
