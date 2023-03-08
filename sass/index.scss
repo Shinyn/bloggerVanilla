@@ -7,3 +7,22 @@
   @include formDesign;
   @include links;
 }
+
+.welcomeDiv {
+  background: linear-gradient(45deg, rgb(65, 3, 56), rgb(26, 69, 7));
+}
+
+#toLoginBtn {
+  background-color: rgb(41, 112, 41);
+  border-radius: 10px;
+}
+
+#createAccountBtn {
+  background-color: rgb(255, 124, 1);
+  border-radius: 10px;
+}
+
+.h1Title {
+  color: white;
+  text-shadow: 0px 0px 5px black;
+}
