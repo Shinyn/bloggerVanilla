@@ -1,7 +1,10 @@
 const express = require("express");
 const server = express();
+const dotenv = require("dotenv").config();
 const mysql = require("mysql2");
 const joi = require("joi");
+
+server.use(express.json());
 
 const config = {
   user: process.env.user,
@@ -12,8 +15,6 @@ const config = {
 
 const pool = mysql.createPool(config);
 
-const form = document.querySelector(".addForm");
-
 server.get("/", (req, res) => {
   console.log(req.query);
   res.status(200).send("Got request");
@@ -21,12 +22,22 @@ server.get("/", (req, res) => {
 
 server.post("/register", (req, res) => {
   const { username, password } = req.body;
+  console.log(req.body, "hellooooOo");
+  const schema = joi.object({
+    username: joi.string().max(20).required(),
+    password: joi.string().max(20).required(),
+  });
+
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    res.status(400).send(validation.error.details[0].message);
+    return;
+  }
+
+  res.status(200).send(`post is working like cray ${username} ${password}`);
+  //   pool.
 });
 
 server.listen(5050);
 
 // const proclaim = querySelector("#proclaim");
-
-// function proclaim() {
-//   console.log("proclaim");
-// }

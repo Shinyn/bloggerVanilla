@@ -5,6 +5,7 @@
 }
 
 :root .welcomeDiv {
+  margin-top: 3%;
   border-radius: 18px;
   border: solid rgba(0, 0, 0, 0.805) 3px;
   display: flex;
