@@ -1,6 +1,6 @@
 const express = require("express");
 const server = express();
-const { getDatabase } = require("./get.js");
+const { getDatabase } = require("./getDatabase.js");
 const { createUser } = require("./createUser.js");
 
 server.use(express.json());
