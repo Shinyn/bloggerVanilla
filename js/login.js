@@ -6,7 +6,7 @@ const form = document.querySelector(".loginForm");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  console.log("eventlistener on form");
+  console.log("login form");
 
   const username = usernameInput.value;
   const password = passwordInput.value;
@@ -19,7 +19,4 @@ form.addEventListener("submit", async (e) => {
     },
     credentials: "include",
   });
-
-  console.log("titta här");
-  console.log(await respons);
 });
