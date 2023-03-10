@@ -1,12 +1,16 @@
-* {
-  margin: 0 auto;
-  padding: 0 auto;
+.taskDiv {
+  display: inline-block;
+  border: 4px double black;
+  margin: 5px;
+  width: 98%;
+  height: auto;
+  padding: 10px;
+  background-color: rgb(172, 198, 56);
 }
 
-form {
-  background-color: rebeccapurple;
+#taskMainDiv {
   width: 500px;
-  height: auto;
+  background-color: rosybrown;
 }
 
 /*# sourceMappingURL=task.css.map */

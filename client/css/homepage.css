@@ -1,0 +1,15 @@
+* {
+  margin: 0 auto;
+  padding: 0 auto;
+  box-sizing: border-box;
+}
+
+form {
+  background-color: rebeccapurple;
+  width: 500px;
+  height: auto;
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+/*# sourceMappingURL=homepage.css.map */
