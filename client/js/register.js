@@ -1,4 +1,3 @@
-const { createUser } = require("../../server/src/createUser");
 const usernameInput = document.querySelector("#registerFormUsername");
 const passwordInput = document.querySelector("#registerFormPassword");
 const form = document.querySelector(".registerForm");
@@ -10,20 +9,12 @@ form.addEventListener("submit", async (e) => {
   const username = usernameInput.value;
   const password = passwordInput.value;
 
-  const body = {
-    username: username,
-    password: password,
-  };
-
-  const respons = await fetch("http://127.0.0.1:5050/pages/register.html", {
+  const respons = await fetch("http://127.0.0.1:5050/createUser", {
     method: "POST",
-    body: JSON.stringify(body),
+    body: JSON.stringify({ username, password }),
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
   });
-
-  //   console.log("titta här");
-  //   console.log(await respons);
+  console.log(respons);
 });

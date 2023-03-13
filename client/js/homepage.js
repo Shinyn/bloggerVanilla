@@ -22,6 +22,7 @@ taskWindow.addEventListener("submit", (e) => {
 function destroyElement() {
   console.log("Yes");
   // här ska vi köra en DELETE
+  // lägg i separat script?
 }
 
 function toogle() {
