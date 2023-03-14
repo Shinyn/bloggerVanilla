@@ -17,7 +17,10 @@ form.addEventListener("submit", async (e) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   console.log(respons);
+  const body = await respons.text();
+  console.log(body);
 });

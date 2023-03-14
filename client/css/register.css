@@ -45,7 +45,7 @@
 
 h1 {
   text-shadow: 0px 4px 7px rgb(0, 0, 0);
-  color: rgb(59, 243, 197) !important;
+  color: rgba(255, 255, 255, 0.801) !important;
 }
 
 .registerForm {
@@ -55,7 +55,7 @@ h1 {
   justify-content: space-evenly;
   display: flex;
   flex-direction: column;
-  background-color: rgb(9, 100, 103);
+  background: linear-gradient(45deg, #4539eb, #036b6e, #3bf3c5);
 }
 
 #registerFormUsername,

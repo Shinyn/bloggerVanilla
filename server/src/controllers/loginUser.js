@@ -3,8 +3,8 @@ const { pool } = require("../database");
 
 exports.loginUser = function loginUser(req, res) {
   const { username, password } = req.body;
+  console.log("loginUser");
 
-  // joi funnkar i POSTMAN men inte i webbläsaren?
   const schema = joi.object({
     username: joi.string().min(3).max(20).required(),
     password: joi.string().min(3).max(20).required(),
@@ -12,14 +12,12 @@ exports.loginUser = function loginUser(req, res) {
 
   const validation = schema.validate(req.body);
 
-  // Får ett error i sources tabben men ingen alert? :S
   if (validation.error) {
     res.status(400).send(validation.error.details[0].message);
-    window.alert("username and / or password was to short / to long");
     return;
   }
 
-  // Är detta fel sätt att logga in?
+  // Är detta fel sätt att logga in? inte vanlig text men med hash ja
   const sql = `select * from users where username = '?' and password = '?'`;
   pool.execute(sql, [username, password], (error, result) => {
     console.log(`error is ${error} and result is -${result}- :(`);
@@ -27,6 +25,14 @@ exports.loginUser = function loginUser(req, res) {
       res.status(400).send(error);
       return;
     }
+
+    res.cookie("authToken", "temporarySecretKey", {
+      maxAge: 999999999,
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+    });
+
     res.status(200).send("You are logged in");
   });
 };
