@@ -11,12 +11,13 @@ form.addEventListener("submit", async (e) => {
   const username = usernameInput.value;
   const password = passwordInput.value;
 
-  const respons = await fetch("http://127.0.0.1:5500/pages/login.html", {
+  const respons = await fetch("http://127.0.0.1:5050/login", {
     method: "POST",
     body: JSON.stringify({ username, password }),
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
   });
+
+  console.log(respons);
 });

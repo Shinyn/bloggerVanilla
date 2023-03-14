@@ -2,19 +2,17 @@ const express = require("express");
 const server = express();
 const cors = require("cors");
 const { getDatabase } = require("./getDatabase.js");
-const { createUser } = require("./createUser.js");
+const { registerRoute } = require("./routes/registerRoute.js");
+const { loginRoute } = require("./routes/loginRoute.js");
 
 server.use(express.json());
 server.use(cors());
 
+server.use("/register", registerRoute);
+
+server.use("/login", loginRoute);
+
 server.get("/", getDatabase);
-
-server.post("/createUser", createUser);
-
-server.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  //   const foundUser =
-});
 
 server.listen(5050);
 

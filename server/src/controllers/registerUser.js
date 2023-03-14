@@ -1,7 +1,7 @@
 const joi = require("joi");
-const { pool } = require("./database");
+const { pool } = require("../database");
 
-exports.createUser = function createUser(req, res) {
+exports.registerUser = function registerUser(req, res) {
   const { username, password } = req.body;
 
   const schema = joi.object({
