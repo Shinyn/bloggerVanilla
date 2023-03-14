@@ -14,26 +14,30 @@
   }
 }
 
+@mixin h1 {
+  color: rgba(255, 255, 255, 0.801);
+  text-shadow: 0px 4px 7px rgb(0, 0, 0);
+}
+
 @mixin formDesign {
-  .welcomeDiv {
-    margin-top: 3%;
-    border-radius: 18px;
-    border: solid rgba(0, 0, 0, 0.805) 3px;
+  .welcomeDiv,
+  .loginForm,
+  .registerForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1rem;
+    border: solid rgba(0, 0, 0, 0.805) 2px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     width: 330px;
     height: 500px;
-    background-color: rgb(93, 2, 46);
-
-    h1 {
-      color: rgba(255, 255, 255, 0.762);
-    }
 
     button {
       background-color: rgba(0, 0, 0, 0.444);
       color: white;
-      //   border: 3px solid rgba(0, 0, 0, 0);
       text-transform: uppercase;
       font-weight: bolder;
       font-size: 15px;
@@ -46,9 +50,17 @@
       &:hover {
         cursor: pointer;
         background: linear-gradient(45deg, rgb(12, 119, 12), rgb(7, 159, 32));
-        // border: 3px solid rgba(255, 255, 255, 0.049);
         text-shadow: 0px 0px 3px black;
       }
     }
   }
+}
+
+@mixin textDesign {
+  font-weight: bolder;
+  font-size: 15px;
+  height: auto;
+  width: 13rem;
+  padding: 15px;
+  border-radius: 8px;
 }

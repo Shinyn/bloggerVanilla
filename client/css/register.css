@@ -4,21 +4,28 @@
   padding: 0 auto;
 }
 
-:root .welcomeDiv {
-  margin-top: 3%;
-  border-radius: 18px;
-  border: solid rgba(0, 0, 0, 0.805) 3px;
+:root {
+  color: rgba(255, 255, 255, 0.801);
+  text-shadow: 0px 4px 7px rgb(0, 0, 0);
+}
+:root .welcomeDiv,
+:root .loginForm,
+:root .registerForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1rem;
+  border: solid rgba(0, 0, 0, 0.805) 2px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   width: 330px;
   height: 500px;
-  background-color: rgb(93, 2, 46);
 }
-:root .welcomeDiv h1 {
-  color: rgba(255, 255, 255, 0.762);
-}
-:root .welcomeDiv button {
+:root .welcomeDiv button,
+:root .loginForm button,
+:root .registerForm button {
   background-color: rgba(0, 0, 0, 0.444);
   color: white;
   text-transform: uppercase;
@@ -30,7 +37,9 @@
   border-radius: 8px;
   transition: all 0.3s;
 }
-:root .welcomeDiv button:hover {
+:root .welcomeDiv button:hover,
+:root .loginForm button:hover,
+:root .registerForm button:hover {
   cursor: pointer;
   background: linear-gradient(45deg, rgb(12, 119, 12), rgb(7, 159, 32));
   text-shadow: 0px 0px 3px black;
@@ -43,18 +52,7 @@
   text-decoration: none;
 }
 
-h1 {
-  text-shadow: 0px 4px 7px rgb(0, 0, 0);
-  color: rgba(255, 255, 255, 0.801) !important;
-}
-
 .registerForm {
-  height: inherit;
-  width: inherit;
-  border-radius: 18px;
-  justify-content: space-evenly;
-  display: flex;
-  flex-direction: column;
   background: linear-gradient(45deg, #4539eb, #036b6e, #3bf3c5);
 }
 
@@ -67,6 +65,29 @@ h1 {
   width: 13rem;
   padding: 15px;
   border-radius: 8px;
+}
+
+#welcomePopUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(20deg, rgb(42, 168, 42), rgb(51, 186, 196));
+  border-radius: 50%;
+  border: solid rgba(0, 0, 0, 0.61) 2px;
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+}
+#welcomePopUp .welcomeText {
+  text-shadow: 0px 4px 7px rgb(0, 0, 0);
+  color: rgba(255, 255, 255, 0.911);
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
 }
 
 /*# sourceMappingURL=register.css.map */
