@@ -23,4 +23,18 @@ form.addEventListener("submit", async (e) => {
   console.log(respons);
   const body = await respons.text();
   console.log(body);
+
+  if (
+    //TODO: måste kolla här om usern ens finns i databasen också. Samma på server delen.
+    username.length >= 3 &&
+    username.length <= 20 &&
+    password.length >= 3 &&
+    password.length <= 20
+  ) {
+    window.location = "http://127.0.0.1:5500/client/pages/homepage.html";
+  } else {
+    alert(
+      "Username and password must be between 3 and 20 characters long, try again!"
+    );
+  }
 });

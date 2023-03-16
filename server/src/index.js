@@ -5,6 +5,7 @@ const { getDatabase } = require("./getDatabase.js");
 const { registerRoute } = require("./routes/registerRoute.js");
 const { loginRoute } = require("./routes/loginRoute.js");
 const cookieParser = require("cookie-parser");
+const { checkAuthentication } = require("./middlewares/checkAuthentication.js");
 
 server.use(express.json());
 server.use(cookieParser());
@@ -14,17 +15,16 @@ server.use("/register", registerRoute);
 
 server.use("/login", loginRoute);
 
+// FIXME:
+// server.use("/friends", checkAuthentication, friendRoute);
+
+//TODO: Vi behöver köra en get till våran databas för att kunna kolla om det är rätt user inloggad.
+server.get("/friends", (req, res) => {});
+
 server.get("/", getDatabase);
 
 server.listen(5050);
 
-// middlewares in i egen mapp också
-function checkAuthentication(req, res, next) {
-  const authToken = req.cookies.authToken;
-  if (authToken === "temporarySecretKey") {
-    next();
-    return;
-  }
-  res.status(403).send("Invalid cookie");
-}
 // const proclaim = querySelector("#proclaim");
+
+// TODO: fixa authenticationRoute med login och register. Och friendRoute / controller - get / add friends
