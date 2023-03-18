@@ -1,5 +1,6 @@
 const joi = require("joi");
 const { pool } = require("../database");
+const bcrypt = require("bcrypt");
 
 exports.registerUser = function registerUser(req, res) {
   const { username, password } = req.body;
@@ -16,8 +17,10 @@ exports.registerUser = function registerUser(req, res) {
     return;
   }
 
+  // const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, 10);
   const sql = `insert into users (username, password) values (?, ?)`;
-  pool.execute(sql, [username, password], (error, result) => {
+  pool.execute(sql, [username, hashedPassword], (error, result) => {
     if (error) {
       res.status(400).send(error);
       return;
