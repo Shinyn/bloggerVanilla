@@ -1,7 +1,9 @@
 const joi = require("joi");
 const { pool } = require("../database");
 const { getDatabase } = require("../getDatabase");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const secret = process.env.DB_SECRET;
 
 exports.loginUser = async function loginUser(req, res) {
   const { username, password } = req.body;
@@ -26,19 +28,21 @@ exports.loginUser = async function loginUser(req, res) {
       return;
     }
 
-    // jag förväntar mig ett password?
-    console.log("hej här kommer results: ");
     console.log(result);
     console.log(" <- Results ? >< loginUser.js på servern ><");
 
     const storedPassword = result[0].password;
     const isEqual = bcrypt.compare(password, storedPassword);
     if (isEqual) {
-      res.cookie("authToken", "temporarySecretKey", {
+      const user = Object.assign({}, result[0]);
+      delete user.password;
+      const authToken = jwt.sign(user, secret);
+      res.cookie("authToken", authToken, {
         // 400 dagars cookie
         maxAge: 34560000000,
         sameSite: "none",
-        secure: true,
+        // postman gillar inte när det är secure
+        //secure: true,
         httpOnly: true,
       });
       res.status(200).send("You are logged in");

@@ -17,10 +17,13 @@ exports.registerUser = function registerUser(req, res) {
     return;
   }
 
-  // const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, 10);
   const sql = `insert into users (username, password) values (?, ?)`;
   pool.execute(sql, [username, hashedPassword], (error, result) => {
+    if (error && error.code === "ER_DUP_ENTRY") {
+      res.send("That username is taken, pick another one");
+      return;
+    }
     if (error) {
       res.status(400).send(error);
       return;

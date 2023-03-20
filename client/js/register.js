@@ -22,22 +22,26 @@ form.addEventListener("submit", async (e) => {
     credentials: "include",
   });
 
-  if (
-    username.length >= 3 &&
-    username.length <= 20 &&
-    password.length >= 3 &&
-    password.length <= 20
-  ) {
-    welcomePopUp();
+  const t = await respons.text();
+  console.log("Response is: ");
+  console.log(t);
 
-    setTimeout(() => {
-      window.location = "http://127.0.0.1:5500/client/pages/login.html";
-    }, 2300);
-  } else {
-    alert(
-      "Username and password must be between 3 and 20 characters long, try again!"
-    );
-  }
+  // if (
+  //   username.length >= 3 &&
+  //   username.length <= 20 &&
+  //   password.length >= 3 &&
+  //   password.length <= 20
+  // ) {
+  //   welcomePopUp();
+
+  //   setTimeout(() => {
+  //     window.location = "http://127.0.0.1:5500/client/pages/login.html";
+  //   }, 2300);
+  // } else {
+  //   alert(
+  //     "Username and password must be between 3 and 20 characters long, try again!"
+  //   );
+  // }
 });
 
 function welcomePopUp() {

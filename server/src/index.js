@@ -15,6 +15,20 @@ server.use("/register", registerRoute);
 
 server.use("/login", loginRoute);
 
+server.post("/todo", (req, res) => {
+  // kolla så att rätt användare är inloggad
+  // lägg till todo, validera också
+});
+
+// server.use(checkAuthentication);
+server.get("/profile", checkAuthentication, (req, res) => {
+  console.log(req);
+  const { username } = req.loggedInUser;
+
+  res.send(username);
+  return;
+});
+
 // FIXME:
 // server.use("/friends", checkAuthentication, friendRoute);
 
