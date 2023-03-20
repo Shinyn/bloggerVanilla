@@ -11,19 +11,6 @@ form.addEventListener("submit", async (e) => {
   const username = usernameInput.value;
   const password = passwordInput.value;
 
-  const respons = await fetch("http://127.0.0.1:5050/login", {
-    method: "POST",
-    body: JSON.stringify({ username, password }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
-
-  console.log(respons);
-  const body = await respons.text();
-  console.log(body);
-
   if (
     //TODO: måste kolla här om usern ens finns i databasen också. Samma på server delen.
     username.length >= 3 &&
@@ -31,6 +18,16 @@ form.addEventListener("submit", async (e) => {
     password.length >= 3 &&
     password.length <= 20
   ) {
+    const respons = await fetch("http://127.0.0.1:5050/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    // const body = await respons.text();
     window.location = "http://127.0.0.1:5500/client/pages/homepage.html";
   } else {
     alert(

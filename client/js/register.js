@@ -10,6 +10,9 @@ form.addEventListener("submit", async (e) => {
   const username = usernameInput.value;
   const password = passwordInput.value;
 
+  // kör en get mot databasen om username finns skicka error
+  //const r = await fetch("http://127.0.0.1:5050");
+
   const respons = await fetch("http://127.0.0.1:5050/register", {
     method: "POST",
     body: JSON.stringify({ username, password }),

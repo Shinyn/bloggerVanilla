@@ -10,19 +10,20 @@ taskWindow.addEventListener("submit", (e) => {
   html.id = "taskMainDiv";
   // ersätt med data vi får från databasen
   html.innerHTML = `
-    <div class="taskDiv">
-    <p class="taskText">${input.value}</p>
-    <button class="taskBtn">Delete</button>
-    </div>`;
+  <form method="DELETE" class="todo-Form">
+      <input type="checkbox" class="todo-checkbox" />
+      <p class="todo-text" aria-placeholder="Lorem">${input.value}
+      </p>
+      <button class="todo-delete">Delete</button>
+    </form>
+  `;
   document.body.appendChild(html);
   document.querySelector(".taskBtn").addEventListener("click", destroyElement);
-  // ska göra POST till servern - kolla så det är rätt användare osv.
+  // ska göra DELETE till servern - kolla så det är rätt användare osv.
 });
 
 function destroyElement() {
-  console.log("Yes");
-  // här ska vi köra en DELETE
-  // lägg i separat script?
+  console.log("hej");
 }
 
 function toogle() {

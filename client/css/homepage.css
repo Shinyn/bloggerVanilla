@@ -1,16 +1,46 @@
 * {
-  margin: 0 auto;
-  padding: 0 auto;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 form {
-  display: flex;
-  background-color: rgb(24, 160, 137);
+  border: double 3px goldenrod;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.797);
   width: 400px;
-  margin: 0 auto;
+  margin: 10px;
   padding: 15px;
+}
+form #inputField {
+  margin: 5px;
+  padding: 5px;
+}
+form #addTaskBtn {
+  padding: 5px;
+}
+
+.todo-Form {
+  width: 80%;
+  margin: 10px;
+  border: 3px double goldenrod;
+  border-radius: 1rem;
+  justify-content: space-between;
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.808);
+  color: rgba(255, 255, 255, 0.807);
+}
+.todo-delete {
+  padding: 5px;
+  border-radius: 1rem;
+}
+.todo-checkbox:checked + .todo-text {
+  text-decoration: line-through;
+  color: rgb(146, 146, 146);
+  text-decoration-color: rgba(255, 255, 255, 0.785);
 }
 
 /*# sourceMappingURL=homepage.css.map */

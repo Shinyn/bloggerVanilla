@@ -3,7 +3,7 @@ const { pool } = require("../database");
 const { getDatabase } = require("../getDatabase");
 const bcrypt = require("bcrypt");
 
-exports.loginUser = function loginUser(req, res) {
+exports.loginUser = async function loginUser(req, res) {
   const { username, password } = req.body;
 
   const schema = joi.object({
@@ -25,6 +25,11 @@ exports.loginUser = function loginUser(req, res) {
       res.status(400).send(error);
       return;
     }
+
+    // jag förväntar mig ett password?
+    console.log("hej här kommer results: ");
+    console.log(result);
+    console.log(" <- Results ? >< loginUser.js på servern ><");
 
     const storedPassword = result[0].password;
     const isEqual = bcrypt.compare(password, storedPassword);
