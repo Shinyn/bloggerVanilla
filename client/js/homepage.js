@@ -17,36 +17,38 @@ taskWindow.addEventListener("submit", async (e) => {
       <button class="todo-delete">Delete</button>
     </form>
   `;
-  document.body.appendChild(html); // Detta borde göras efter att fetchen har gått igenom annars ERROR
-
-  // kolla cookien och se om det är rätt användare?
-  // await fetch("")
-  const body = { userInput };
 
   // Ska skicka med det användaren skrivit in i sin todo (men till todoLIST! ska ändras till todo)
   const addedTodo = await fetch("http://127.0.0.1:5050/todoList", {
     method: "POST",
-    body: JSON.stringify(body),
+    body: JSON.stringify({ userInput }),
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
   });
 
-  document.querySelector(".taskBtn").addEventListener("click", async (e) => {
-    e.preventDefault();
+  console.log(addedTodo);
+  if (addedTodo.status === 200) {
+    document.body.appendChild(html); // Detta borde göras efter att fetchen har gått igenom annars ERROR
+  } else {
+    alert(addedTodo.status);
+  }
 
-    // FIXME:
-    // här ska vi deleta todo -> Skapa todoRouten
-    const respons = await fetch("http://127.0.0.1:5050/", {
-      method: "DELETE",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
-  });
+  // document.querySelector(".taskBtn").addEventListener("click", async (e) => {
+  //   e.preventDefault();
+
+  //   // FIXME:
+  //   // här ska vi deleta todo -> Skapa todoRouten
+  //   const respons = await fetch("http://127.0.0.1:5050/", {
+  //     method: "DELETE",
+  //     body: JSON.stringify({ username, password }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     credentials: "include",
+  //   });
+  // });
   // ska göra DELETE till servern - kolla så det är rätt användare osv.
   // ska deleta elementet också
 });

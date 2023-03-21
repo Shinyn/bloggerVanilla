@@ -4,36 +4,41 @@ const { pool } = require("../database");
 exports.addList = async function addList(req, res) {
   console.log(req.body);
   console.log(req);
-  // Har lyckats ta mig hit iallafall men efter loggen nedan verkar inget ske.
-  // Det enda som skickats med är inputText från usern
+  // HÄR---------------------------------!!
+  // All info finns i loggedInUser objektet
   console.log("Server: addList");
 
-  const { username, userInput } = req.body;
+  console.log(req.loggedInUser);
+  const userID = req.loggedInUser.id;
+  const { userInput } = req.body;
 
-  // Hämtar id på user
-  const getUserId = `select id from users where username = ?`;
-  pool.execute(getUserId, [username], (error, result) => {
+  const sql = `insert into todoList (userID, listName) values (?, ?)`;
+  pool.execute(sql, [userID, userInput], (error, result) => {
     if (error) {
       res.status(400).send(error);
       return;
     }
-
-    // Om id finns skapa todo
-    console.log("result is:");
-    console.log(result[0].id);
-
-    const userID = result[0].id;
-    // const todoText = "todo text we get from user";
-    const sql = `insert into todoList (listID, listName) values (?, ?)`;
-    pool.execute(sql, [userID, userInput], (error, result) => {
-      if (error) {
-        res.status(400).send(error);
-        return;
-      }
-      res.send(result);
-    });
+    res.status(200).send(result);
   });
 };
+
+// Hämtar id på user
+//   const getUserId = `select id from users where username = ?`;
+//   pool.execute(getUserId, [username], (error, result) => {
+//     if (error) {
+//       res.status(400).send(error);
+//       return;
+//     }
+
+//     // Om id finns skapa todo
+//     console.log("result is:");
+//     console.log(result[0].id);
+
+//     const userID = result[0].id;
+//     // const todoText = "todo text we get from user";
+
+//   });
+// };
 
 /* Gör dessa i ordning (och få dom att funka):
 

@@ -31,19 +31,21 @@ exports.loginUser = async function loginUser(req, res) {
     // if result
 
     console.log(">< loginUser.js på servern ><");
-
+    // console.log(result);
     const storedPassword = result[0].password;
     const isEqual = bcrypt.compare(password, storedPassword);
     if (isEqual) {
       const user = Object.assign({}, result[0]);
       delete user.password;
+      // console.log(user);
       const authToken = jwt.sign(user, secret);
+      // console.log(authToken);
       res.cookie("authToken", authToken, {
         // 400 dagars cookie
         maxAge: 34560000000,
         sameSite: "none",
         // postman gillar inte när det är secure
-        //secure: true,
+        secure: true,
         httpOnly: true,
       });
       res.status(200).send("You are logged in");
