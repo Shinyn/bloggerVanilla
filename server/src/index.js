@@ -17,6 +17,7 @@ server.use("/register", registerRoute);
 
 server.use("/login", loginRoute);
 
+// Används inte atm
 server.use("/todo", todoRoute);
 
 server.use("/todoList", checkAuthentication, listRoute);

@@ -30,19 +30,26 @@ taskWindow.addEventListener("submit", async (e) => {
     credentials: "include",
   });
 
-  console.log(addedTodoList);
+  // console.log(addedTodoList);
   if (addedTodoList.status === 200) {
     document.body.appendChild(html);
     const checkbox = document.querySelector(".todo-checkbox");
-    checkbox.addEventListener("change", () => {
-      if (checkbox.checked === false) {
-        // PATCH till servern - fixa route
-      }
+
+    // Lyssnar efter 'change' på checkBoxen på todo'n
+    checkbox.addEventListener("change", async () => {
+      const checkboxFalse = await fetch("http://127.0.0.1:5050/todoList", {
+        method: "PATCH",
+        body: JSON.stringify({ isChecked }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
     });
+
     console.log("Is it checked?:");
     console.log(checkbox.checked);
     // FIXME: här använd checked status
-    // skapa listener för checkboxen?
   } else {
     alert(addedTodoList.status);
   }

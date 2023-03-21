@@ -32,9 +32,9 @@ exports.loginUser = async function loginUser(req, res) {
       res.status(404).send(error);
       return;
     }
-    console.log(result);
-    console.log(result.length);
-    console.log("see any length?");
+    // console.log(result);
+    // console.log(result.length);
+    // console.log("see any length?");
 
     // TODO: FIXME:
     // console.log(req);
