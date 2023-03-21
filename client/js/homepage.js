@@ -4,20 +4,35 @@ document.querySelector("#openTaskBtn").addEventListener("click", toogle);
 const taskWindow = document.querySelector("#taskForm");
 taskWindow.style.display = "none";
 
-taskWindow.addEventListener("submit", (e) => {
+taskWindow.addEventListener("submit", async (e) => {
   e.preventDefault();
+  let userInput = input.value;
   const html = document.createElement("div");
   html.id = "taskMainDiv";
-  // ersätt med data vi får från databasen?
   html.innerHTML = `
   <form method="DELETE" class="todo-Form">
       <input type="checkbox" class="todo-checkbox" />
-      <p class="todo-text" aria-placeholder="Lorem">${input.value}
+      <p class="todo-text" aria-placeholder="Lorem">${userInput}
       </p>
       <button class="todo-delete">Delete</button>
     </form>
   `;
-  document.body.appendChild(html);
+  document.body.appendChild(html); // Detta borde göras efter att fetchen har gått igenom annars ERROR
+
+  // kolla cookien och se om det är rätt användare?
+  // await fetch("")
+  const body = { userInput };
+
+  // Ska skicka med det användaren skrivit in i sin todo (men till todoLIST! ska ändras till todo)
+  const addedTodo = await fetch("http://127.0.0.1:5050/todoList", {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
   document.querySelector(".taskBtn").addEventListener("click", async (e) => {
     e.preventDefault();
 

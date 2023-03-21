@@ -28,8 +28,9 @@ exports.loginUser = async function loginUser(req, res) {
       return;
     }
 
-    console.log(result);
-    console.log(" <- Results ? >< loginUser.js på servern ><");
+    // if result
+
+    console.log(">< loginUser.js på servern ><");
 
     const storedPassword = result[0].password;
     const isEqual = bcrypt.compare(password, storedPassword);

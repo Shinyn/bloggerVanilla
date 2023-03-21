@@ -24,7 +24,7 @@ form.addEventListener("submit", async (e) => {
 
   const t = await respons.text();
   console.log("Response is: ");
-  console.log(t);
+  // console.log(t.loggedInUser);
 
   // if (
   //   username.length >= 3 &&
