@@ -2,18 +2,19 @@ const { pool } = require("../database");
 
 // Det jag förväntar mig är todo texten
 exports.addList = async function addList(req, res) {
-  console.log(req.body);
-  console.log(req);
+  //   console.log(req.body);
+  //   console.log(req);
+
   // HÄR---------------------------------!!
   // All info finns i loggedInUser objektet
   console.log("Server: addList");
 
   console.log(req.loggedInUser);
   const userID = req.loggedInUser.id;
-  const { userInput } = req.body;
+  const { userInput, isChecked } = req.body;
 
-  const sql = `insert into todoList (userID, listName) values (?, ?)`;
-  pool.execute(sql, [userID, userInput], (error, result) => {
+  const sql = `insert into todoList (userID, listName, marked) values (?, ?, ?)`;
+  pool.execute(sql, [userID, userInput, isChecked], (error, result) => {
     if (error) {
       res.status(400).send(error);
       return;

@@ -6,7 +6,6 @@ const form = document.querySelector(".loginForm");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  console.log("login form");
 
   const username = usernameInput.value;
   const password = passwordInput.value;
@@ -27,7 +26,14 @@ form.addEventListener("submit", async (e) => {
       credentials: "include",
     });
 
-    // const body = await respons.text();
+    if (respons.status === 404) {
+      alert("No user with that name");
+      return;
+    }
+    console.log("INFO---------------------------------<><><<<");
+    console.log(respons);
+    console.log(respons.status);
+    // if (respons.status)
     window.location = "http://127.0.0.1:5500/client/pages/homepage.html";
   } else {
     alert(

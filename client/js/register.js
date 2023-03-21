@@ -22,34 +22,34 @@ form.addEventListener("submit", async (e) => {
     credentials: "include",
   });
 
-  const t = await respons.text();
-  console.log("Response is: ");
+  const message = await respons.text();
+  // console.log("Message is: ", message, "\n Respons:", respons);
   // console.log(t.loggedInUser);
 
-  // if (
-  //   username.length >= 3 &&
-  //   username.length <= 20 &&
-  //   password.length >= 3 &&
-  //   password.length <= 20
-  // ) {
-  //   welcomePopUp();
+  if (
+    username.length >= 3 &&
+    username.length <= 20 &&
+    password.length >= 3 &&
+    password.length <= 20
+  ) {
+    welcomePopUp(message);
 
-  //   setTimeout(() => {
-  //     window.location = "http://127.0.0.1:5500/client/pages/login.html";
-  //   }, 2300);
-  // } else {
-  //   alert(
-  //     "Username and password must be between 3 and 20 characters long, try again!"
-  //   );
-  // }
+    setTimeout(() => {
+      window.location = "http://127.0.0.1:5500/client/pages/login.html";
+    }, 2300);
+  } else {
+    alert(
+      "Username and password must be between 3 and 20 characters long, try again!"
+    );
+  }
 });
 
-function welcomePopUp() {
+function welcomePopUp(message) {
   const html = document.createElement("div");
   html.id = "welcomePopUp";
 
   html.innerHTML = `
-    <p class="welcomeText">Account Created</p>
+    <p class="welcomeText">${message}</p>
     <br/> 
     <p class="welcomeText">Welcome</p>`;
   document.body.appendChild(html);

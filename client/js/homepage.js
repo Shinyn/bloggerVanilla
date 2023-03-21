@@ -18,21 +18,33 @@ taskWindow.addEventListener("submit", async (e) => {
     </form>
   `;
 
-  // Ska skicka med det användaren skrivit in i sin todo (men till todoLIST! ska ändras till todo)
-  const addedTodo = await fetch("http://127.0.0.1:5050/todoList", {
+  const isChecked = false;
+  //FIXME: ska skicka med om boxen är iklickad eller ej
+  //FIXME: Ska skicka med det användaren skrivit in i sin todo (men till todoLIST! ska ändras till todo)
+  const addedTodoList = await fetch("http://127.0.0.1:5050/todoList", {
     method: "POST",
-    body: JSON.stringify({ userInput }),
+    body: JSON.stringify({ userInput, isChecked }),
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
   });
 
-  console.log(addedTodo);
-  if (addedTodo.status === 200) {
-    document.body.appendChild(html); // Detta borde göras efter att fetchen har gått igenom annars ERROR
+  console.log(addedTodoList);
+  if (addedTodoList.status === 200) {
+    document.body.appendChild(html);
+    const checkbox = document.querySelector(".todo-checkbox");
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked === false) {
+        // PATCH till servern - fixa route
+      }
+    });
+    console.log("Is it checked?:");
+    console.log(checkbox.checked);
+    // FIXME: här använd checked status
+    // skapa listener för checkboxen?
   } else {
-    alert(addedTodo.status);
+    alert(addedTodoList.status);
   }
 
   // document.querySelector(".taskBtn").addEventListener("click", async (e) => {
