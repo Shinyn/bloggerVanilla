@@ -35,18 +35,11 @@ form #addTaskBtn {
 }
 .todo-delete {
   padding: 5px;
-  border-radius: 1rem;
 }
 .todo-checkbox:checked + .todo-text {
   text-decoration: line-through;
   color: rgb(146, 146, 146);
   text-decoration-color: rgba(255, 255, 255, 0.785);
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 1;
 }
 
 h1 {
@@ -55,22 +48,22 @@ h1 {
   text-align: center;
   font-size: 2rem;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 button {
   padding: 10px;
   font-size: 0.9rem;
   border-radius: 5px;
-  text-shadow: 1px 1px 2px white;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
-  border: rgba(255, 255, 255, 0.81) 3px solid;
+  border: rgba(255, 255, 255, 0.81) 1px solid;
   color: rgba(255, 255, 255, 0.803);
   background-color: rgba(0, 0, 0, 0.801);
 }
 button:hover {
   cursor: pointer;
-  background-color: rgba(103, 103, 103, 0.427);
+  background-color: rgba(21, 129, 44, 0.427);
 }
 
 /*# sourceMappingURL=homepage.css.map */

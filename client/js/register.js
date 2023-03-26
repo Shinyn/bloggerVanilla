@@ -10,9 +10,6 @@ form.addEventListener("submit", async (e) => {
   const username = usernameInput.value;
   const password = passwordInput.value;
 
-  // kör en get mot databasen om username finns skicka error
-  //const r = await fetch("http://127.0.0.1:5050");
-
   const respons = await fetch("http://127.0.0.1:5050/register", {
     method: "POST",
     body: JSON.stringify({ username, password }),
@@ -23,8 +20,7 @@ form.addEventListener("submit", async (e) => {
   });
 
   const message = await respons.text();
-  // console.log("Message is: ", message, "\n Respons:", respons);
-  // console.log(t.loggedInUser);
+  const ress = await respons;
 
   if (
     username.length >= 3 &&
@@ -32,8 +28,11 @@ form.addEventListener("submit", async (e) => {
     password.length >= 3 &&
     password.length <= 20
   ) {
+    if (ress.status === 400) {
+      alert(message);
+      return;
+    }
     welcomePopUp(message);
-
     setTimeout(() => {
       window.location = "http://127.0.0.1:5500/client/pages/login.html";
     }, 2300);

@@ -4,6 +4,8 @@ document.querySelector("#openTaskBtn").addEventListener("click", toogle);
 const taskWindow = document.querySelector("#taskForm");
 taskWindow.style.display = "none";
 
+// Köra en get på användaren som är inloggad och lägg till namnet på hemskärmen?
+
 taskWindow.addEventListener("submit", async (e) => {
   e.preventDefault();
   let userInput = input.value;

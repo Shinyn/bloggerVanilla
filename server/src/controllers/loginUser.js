@@ -1,6 +1,5 @@
 const joi = require("joi");
 const { pool } = require("../database");
-const { getDatabase } = require("../getDatabase");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const secret = process.env.DB_SECRET;
@@ -20,26 +19,15 @@ exports.loginUser = async function loginUser(req, res) {
     return;
   }
 
-  // Behöver checka databasen och kolla om användaren ens finns
+  // Kollar om användaren finns
   const getUser = `select * from users where username = ?`;
-  pool.execute(getUser, [username], (error, result) => {
-    if (error) {
-      res.status(404).send(error);
+  pool.execute(getUser, [username], (err, resu) => {
+    if (err || resu.length === 0) {
+      res.status(404).send(err);
       return;
     }
 
-    if (result.length === 0) {
-      res.status(404).send(error);
-      return;
-    }
-    // console.log(result);
-    // console.log(result.length);
-    // console.log("see any length?");
-
-    // TODO: FIXME:
-    // console.log(req);
-
-    //TODO: fixa hash, Dag 6
+    // Kollar om password stämmer
     const getPassword = `select * from users where username = ?`;
     pool.execute(getPassword, [username], (error, result) => {
       if (error) {
@@ -47,10 +35,11 @@ exports.loginUser = async function loginUser(req, res) {
         return;
       }
 
-      console.log("loginUser.js på servern >--------<");
-      // console.log(result);
       const storedPassword = result[0].password;
-      const isEqual = bcrypt.compare(password, storedPassword);
+      console.log("Stored password is: ", storedPassword);
+
+      const isEqual = bcrypt.compareSync(password, storedPassword);
+      console.log("IsEqual is: ", isEqual);
       if (isEqual) {
         const user = Object.assign({}, result[0]);
         delete user.password;
@@ -67,7 +56,7 @@ exports.loginUser = async function loginUser(req, res) {
         });
         res.status(200).send("You are logged in");
       } else {
-        res.sendStatus(401);
+        res.status(401).send("Incorrect login details");
       }
     });
   });

@@ -11,7 +11,6 @@ form.addEventListener("submit", async (e) => {
   const password = passwordInput.value;
 
   if (
-    //TODO: måste kolla här om usern ens finns i databasen också. Samma på server delen.
     username.length >= 3 &&
     username.length <= 20 &&
     password.length >= 3 &&
@@ -26,14 +25,17 @@ form.addEventListener("submit", async (e) => {
       credentials: "include",
     });
 
+    const message = await respons.text();
+
     if (respons.status === 404) {
       alert("No user with that name");
       return;
     }
-    console.log("INFO---------------------------------<><><<<");
-    console.log(respons);
-    console.log(respons.status);
-    // if (respons.status)
+
+    if (respons.status === 401) {
+      alert(message);
+      return;
+    }
     window.location = "http://127.0.0.1:5500/client/pages/homepage.html";
   } else {
     alert(

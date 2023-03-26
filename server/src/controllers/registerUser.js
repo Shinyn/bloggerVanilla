@@ -21,7 +21,7 @@ exports.registerUser = function registerUser(req, res) {
   const sql = `insert into users (username, password) values (?, ?)`;
   pool.execute(sql, [username, hashedPassword], (error, result) => {
     if (error && error.code === "ER_DUP_ENTRY") {
-      res.send("That username is taken, pick another one");
+      res.status(400).send("That username is taken, pick another one");
       return;
     }
     if (error) {
