@@ -1,36 +1,61 @@
-"use strict";
+// let userInput = listNameInput.value;"use strict";
 const listNameInput = document.querySelector("#listNameInput");
-const listContainer = document.querySelector(".homepage-lists");
 document.querySelector("#openAddListBtn").addEventListener("click", toogle);
 const listForm = document.querySelector("#listForm");
 listForm.style.display = "none";
 
+/*
+1. Skapa todo lista
+2. Skapa todo i vald lista
+3. Lägg till vän
+*/
+
 listForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+  let userInput = listNameInput.value;
+  const html = document.createElement("div");
+  html.id = "taskMainDiv";
+  html.innerHTML = `
+  <form method="DELETE" class="todo-Form">
+      <input type="checkbox" class="todo-checkbox" />
+      <p class="todo-text">${userInput}
+      </p>
+      <button class="todo-delete">Delete</button>
+    </form>
+  `;
 
-  const userInput = listNameInput.value;
+  const isChecked = false;
+  //FIXME: ska skicka med om boxen är iklickad eller ej
+  //FIXME: Ska skicka med det användaren skrivit in i sin todo (men till todoLIST! ska ändras till todo)
   const addedTodoList = await fetch("http://127.0.0.1:5050/todoList", {
     method: "POST",
-    body: JSON.stringify({ userInput }),
+    body: JSON.stringify({ userInput, isChecked }),
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
   });
 
+  // console.log(addedTodoList);
   if (addedTodoList.status === 200) {
-    const html = document.createElement("div");
-    html.class = "generatedListMainDiv";
-    // Vi har båda formsen i en gemensam div så när man lägger till en todo i todolist så hamnar den under
-    html.innerHTML = `
-    <div class="generatedContainerDiv">
-    <form method="DELETE" class="generatedListForm">
-      <p class="generatedListName">${userInput}</p>
-      <button class="generatedListDeleteBtn">Delete</button>
-    </form>
-    </div>
-  `;
-    listContainer.appendChild(html);
+    document.body.appendChild(html);
+    const checkbox = document.querySelector(".todo-checkbox");
+
+    // Lyssnar efter 'change' på checkBoxen på todo'n
+    checkbox.addEventListener("change", async () => {
+      const checkboxFalse = await fetch("http://127.0.0.1:5050/todoList", {
+        method: "PATCH",
+        body: JSON.stringify({ isChecked }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+    });
+
+    console.log("Is it checked?:");
+    console.log(checkbox.checked);
+    // FIXME: här använd checked status
   } else {
     alert(addedTodoList.status);
   }

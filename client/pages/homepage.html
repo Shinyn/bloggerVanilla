@@ -11,33 +11,40 @@
   </head>
   <body>
     <h1>HOMEPAGE</h1>
-    <button id="openTaskBtn">Add new todo</button>
-    <button>+List</button>
-    <button>+Friends</button>
-    <form action="" id="taskForm">
-      <input id="inputField" type="text" placeholder="todo.." />
-      <button id="addTaskBtn">ADD TASK</button>
+    <!-- TODO: lägg till listor -->
+    <button id="openAddListBtn">Add List</button>
+    <form action="POST" id="listForm">
+      <input id="listNameInput" type="text" placeholder="Name" />
+      <button id="addListBtn">Create List</button>
     </form>
 
+    <!-- Här stoppar jag in alla todo-listor -->
+    <div class="homepage-lists"></div>
+
+    <!--  delete from todo where listID = ? -->
+
+    <!-- Skapa todos - TODO: fixa  -->
+    <form action="POST" id="todoForm">
+      <input id="todoInput" type="text" placeholder="Todo.." />
+      <input id="todoListName" type="text" placeholder="Name of list" />
+      <button id="addTodoBtn">Add Todo</button>
+    </form>
+
+    <h1>NO</h1>
+    <div class="generatedContainerDiv">
+      <form method="DELETE" class="generatedListForm">
+        <p class="generatedListName">${userInput}</p>
+        <button class="generatedListDeleteBtn">Delete</button>
+      </form>
+    </div>
     <!-- 
       Vad ska homepage ha?
       1. lista med listor
       add new list | show lists | remove list
       2. lista med tasks
-        show tasks | add task | remove task
-        3. lista med friends
-        show friends | add friend | remove friend
+      show tasks | add task | remove task
+      3. lista med friends
+      show friends | add friend | remove friend
       -->
-    <!-- TODO: Ska genereras med js -->
-    <!-- <form method="DELETE" class="todo-Form">
-      <input type="checkbox" class="todo-checkbox" />
-      <p class="todo-text" aria-placeholder="Lorem">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quaerat
-        perferendis sunt aliquam, rerum omnis blanditiis ipsa repellat
-        consectetur voluptate esse officiis mollitia sapiente repellendus
-        debitis alias vel corporis quis.
-      </p>
-      <button class="todo-delete">Delete</button> -->
-    </form>
   </body>
 </html>

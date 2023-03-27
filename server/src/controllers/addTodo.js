@@ -1,7 +1,5 @@
 const { pool } = require("../database");
 
-// skapa todo och skicka till databasen
-
 exports.addTodo = async function addTodo(req, res) {
   console.log("XX addTodo XX");
 
@@ -31,9 +29,3 @@ exports.addTodo = async function addTodo(req, res) {
     });
   });
 };
-
-/* Gör dessa i ordning (och få dom att funka):
-
-1. Posta todo - kolla att databasen har todo'n
-
-*/

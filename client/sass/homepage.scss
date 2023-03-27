@@ -13,12 +13,12 @@ form {
   margin: 10px;
   padding: 15px;
 
-  #inputField {
+  #listNameInput {
     margin: 5px;
     padding: 5px;
   }
 
-  #addTaskBtn {
+  #addListBtn {
     padding: 5px;
   }
 }
@@ -78,4 +78,11 @@ button {
     cursor: pointer;
     background-color: rgba(21, 129, 44, 0.427);
   }
+}
+
+.homepage-lists {
+  // display: grid;
+  bottom: 0;
+  right: 0;
+  background-color: aqua;
 }

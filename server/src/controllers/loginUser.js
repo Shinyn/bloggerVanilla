@@ -36,16 +36,11 @@ exports.loginUser = async function loginUser(req, res) {
       }
 
       const storedPassword = result[0].password;
-      console.log("Stored password is: ", storedPassword);
-
       const isEqual = bcrypt.compareSync(password, storedPassword);
-      console.log("IsEqual is: ", isEqual);
       if (isEqual) {
         const user = Object.assign({}, result[0]);
         delete user.password;
-        // console.log(user);
         const authToken = jwt.sign(user, secret);
-        // console.log(authToken);
         res.cookie("authToken", authToken, {
           // 400 dagars cookie
           maxAge: 34560000000,
