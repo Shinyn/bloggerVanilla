@@ -29,6 +29,7 @@ listFormBtn.addEventListener("click", async (e) => {
       <p class="generatedListName">${userInput}</p>
       <button class="generatedListTodoBtn">Add Todo</button>
       <button class="generatedListDeleteBtn">Delete</button>
+      <div class="generatedListTodoDiv"></div>
     </div>
   `;
     listContainer.appendChild(html);
@@ -41,13 +42,16 @@ listFormBtn.addEventListener("click", async (e) => {
     .addEventListener("click", async (e) => {
       e.preventDefault();
 
-      const respons = await fetch("http://127.0.0.1:5050/todo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      const todo = document.createElement("div");
+      todo.class = "generatedTodo";
+      todo.innerHTML = `
+      <div class="generatedListForm form">
+        <p class="generatedListName">${userInput}</p>
+        <button class="generatedListTodoBtn">Add Todo</button>
+        <button class="generatedListDeleteBtn">Delete</button>
+        <div class="generatedListTodoDiv"></div>
+      </div>
+    `;
     });
 });
 

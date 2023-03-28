@@ -69,14 +69,14 @@ button:hover {
 .homepage-lists {
   bottom: 0;
   right: 0;
-  background-color: aqua;
 }
 
 .generatedListForm {
   color: white;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  height: 650px;
 }
 
 /*# sourceMappingURL=homepage.css.map */

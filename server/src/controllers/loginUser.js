@@ -46,7 +46,7 @@ exports.loginUser = async function loginUser(req, res) {
           maxAge: 34560000000,
           sameSite: "none",
           // postman gillar inte när det är secure
-          secure: true,
+          // secure: true,
           httpOnly: true,
         });
         res.status(200).send("You are logged in");

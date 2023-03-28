@@ -83,12 +83,15 @@ button {
   // display: grid;
   bottom: 0;
   right: 0;
-  background-color: aqua;
+  // background-color: aqua;
 }
 
 .generatedListForm {
   color: white;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  height: 650px;
 }
+
+// border-bottom: solid rgb(228, 255, 77) 3px;

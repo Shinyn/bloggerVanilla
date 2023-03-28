@@ -1,29 +1,19 @@
+"use strict";
 const { pool } = require("../../database");
 
 exports.addTodo = async function addTodo(req, res) {
-  const { username } = req.body;
+  console.log(req);
+  const { listID, isChecked, content } = req.body;
 
-  // Hämtar id på user
-  const getUserId = `select id from users where username = ?`;
-  pool.execute(getUserId, [username], (error, result) => {
+  const sql = `insert into todo (listID, marked, content) values (?, ?, ?)`;
+  pool.execute(sql, [listID, isChecked, content], (error, result) => {
     if (error) {
       res.status(400).send(error);
       return;
     }
-
-    // Om id finns skapa todo
-    console.log("result is:");
-    console.log(result[0].id);
-
-    const userID = result[0].id;
-    const todoText = "todo text we get from user";
-    const sql = `insert into todoList (listID, listName) values (?, ?)`;
-    pool.execute(sql, [userID, todoText], (error, result) => {
-      if (error) {
-        res.status(400).send(error);
-        return;
-      }
-      res.send(result);
-    });
+    res.status(201).send("Added new todo to list");
   });
 };
+
+//FIXME: Får du "jwt error" - null / undefined === postman secure buggen!!!
+//FIXME: isChecked måste va 0 för false och 1 för true
