@@ -3,9 +3,10 @@ const listNameInput = document.querySelector("#listNameInput");
 const listContainer = document.querySelector(".homepage-lists");
 document.querySelector("#openAddListBtn").addEventListener("click", toogle);
 const listForm = document.querySelector("#listForm");
+const listFormBtn = document.querySelector("#addListBtn");
 listForm.style.display = "none";
 
-listForm.addEventListener("submit", async (e) => {
+listFormBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const userInput = listNameInput.value;
@@ -18,16 +19,16 @@ listForm.addEventListener("submit", async (e) => {
     credentials: "include",
   });
 
+  console.log(addedTodoList);
+
   if (addedTodoList.status === 200) {
     const html = document.createElement("div");
     html.class = "generatedListMainDiv";
-    // Vi har båda formsen i en gemensam div så när man lägger till en todo i todolist så hamnar den under
     html.innerHTML = `
-    <div class="generatedContainerDiv">
-    <form method="DELETE" class="generatedListForm">
+    <div class="generatedListForm form">
       <p class="generatedListName">${userInput}</p>
+      <button class="generatedListTodoBtn">Add Todo</button>
       <button class="generatedListDeleteBtn">Delete</button>
-    </form>
     </div>
   `;
     listContainer.appendChild(html);
@@ -35,22 +36,19 @@ listForm.addEventListener("submit", async (e) => {
     alert(addedTodoList.status);
   }
 
-  // document.querySelector(".taskBtn").addEventListener("click", async (e) => {
-  //   e.preventDefault();
+  document
+    .querySelector(".generatedListTodoBtn")
+    .addEventListener("click", async (e) => {
+      e.preventDefault();
 
-  //   // FIXME:
-  //   // här ska vi deleta todo -> Skapa todoRouten
-  //   const respons = await fetch("http://127.0.0.1:5050/", {
-  //     method: "DELETE",
-  //     body: JSON.stringify({ username, password }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     credentials: "include",
-  //   });
-  // });
-  // ska göra DELETE till servern - kolla så det är rätt användare osv.
-  // ska deleta elementet också
+      const respons = await fetch("http://127.0.0.1:5050/todo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+    });
 });
 
 // Kan göras om så den funkar på ALLA knappar

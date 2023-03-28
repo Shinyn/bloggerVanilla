@@ -1,8 +1,6 @@
-const { pool } = require("../database");
+const { pool } = require("../../database");
 
 exports.addTodo = async function addTodo(req, res) {
-  console.log("XX addTodo XX");
-
   const { username } = req.body;
 
   // Hämtar id på user

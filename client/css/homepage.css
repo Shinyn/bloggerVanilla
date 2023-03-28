@@ -5,7 +5,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-form {
+.form {
   border: double 3px goldenrod;
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.797);
@@ -13,11 +13,11 @@ form {
   margin: 10px;
   padding: 15px;
 }
-form #listNameInput {
+.form #listNameInput {
   margin: 5px;
   padding: 5px;
 }
-form #addListBtn {
+.form #addListBtn {
   padding: 5px;
 }
 
@@ -70,6 +70,13 @@ button:hover {
   bottom: 0;
   right: 0;
   background-color: aqua;
+}
+
+.generatedListForm {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /*# sourceMappingURL=homepage.css.map */

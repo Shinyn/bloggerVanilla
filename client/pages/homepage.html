@@ -11,12 +11,15 @@
   </head>
   <body>
     <h1>HOMEPAGE</h1>
+    <p>Logged in as:</p>
+    <span class="currentLoggedInUser"></span>
+    <button class="logoutBtn">Logout</button>
     <!-- TODO: lägg till listor -->
     <button id="openAddListBtn">Add List</button>
-    <form action="POST" id="listForm">
+    <div id="listForm" class="form">
       <input id="listNameInput" type="text" placeholder="Name" />
       <button id="addListBtn">Create List</button>
-    </form>
+    </div>
 
     <!-- Här stoppar jag in alla todo-listor -->
     <div class="homepage-lists"></div>
@@ -24,19 +27,12 @@
     <!--  delete from todo where listID = ? -->
 
     <!-- Skapa todos - TODO: fixa  -->
-    <form action="POST" id="todoForm">
+    <!-- <form action="POST" id="todoForm">
       <input id="todoInput" type="text" placeholder="Todo.." />
       <input id="todoListName" type="text" placeholder="Name of list" />
       <button id="addTodoBtn">Add Todo</button>
-    </form>
+    </form> -->
 
-    <h1>NO</h1>
-    <div class="generatedContainerDiv">
-      <form method="DELETE" class="generatedListForm">
-        <p class="generatedListName">${userInput}</p>
-        <button class="generatedListDeleteBtn">Delete</button>
-      </form>
-    </div>
     <!-- 
       Vad ska homepage ha?
       1. lista med listor
