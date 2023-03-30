@@ -5,14 +5,12 @@ exports.editTodo = async function editTodo(req, res) {
   console.log(req);
   const { listID, isChecked, content } = req.body;
 
-  const sql = `update todo set marked = ? where id = ?;`;
-  pool.execute(sql, [listID, isChecked, content], (error, result) => {
+  const sql = `update todo set content = ?, marked = ? where id = ?;`;
+  pool.execute(sql, [content, isChecked, listID], (error, result) => {
     if (error) {
       res.status(400).send(error);
       return;
     }
-    res.status(201).send("Added new todo to list");
+    res.status(202).send("Updated todo");
   });
 };
-
-//-- Ha en patch för när man byter marked och en patch för när man uppdaterar content

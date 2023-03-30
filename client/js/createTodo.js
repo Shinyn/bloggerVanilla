@@ -4,6 +4,9 @@ document.querySelector("#openAddListBtn").addEventListener("click", toogle);
 const listForm = document.querySelector("#listForm");
 listForm.style.display = "none";
 
+//FIXME:
+//FIXME: THIS IS NOT IMPLEMENTED - THIS IS OLD CODE THAT I REFERENCE TOO WHEN WORKING ON AN UPDATED VERSION
+//FIXME:
 /*
 1. Skapa todo lista
 2. Skapa todo i vald lista
@@ -25,9 +28,7 @@ listForm.addEventListener("submit", async (e) => {
   `;
 
   const isChecked = false;
-  //FIXME: ska skicka med om boxen är iklickad eller ej
-  //FIXME: Ska skicka med det användaren skrivit in i sin todo (men till todoLIST! ska ändras till todo)
-  const addedTodoList = await fetch("http://127.0.0.1:5050/todoList", {
+  const addedTodoList = await fetch("http://127.0.0.1:5050/todo", {
     method: "POST",
     body: JSON.stringify({ userInput, isChecked }),
     headers: {
@@ -36,14 +37,13 @@ listForm.addEventListener("submit", async (e) => {
     credentials: "include",
   });
 
-  // console.log(addedTodoList);
   if (addedTodoList.status === 200) {
     document.body.appendChild(html);
     const checkbox = document.querySelector(".todo-checkbox");
 
     // Lyssnar efter 'change' på checkBoxen på todo'n
     checkbox.addEventListener("change", async () => {
-      const checkboxFalse = await fetch("http://127.0.0.1:5050/todoList", {
+      const checkboxFalse = await fetch("http://127.0.0.1:5050/todo", {
         method: "PATCH",
         body: JSON.stringify({ isChecked }),
         headers: {

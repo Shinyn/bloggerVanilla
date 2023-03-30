@@ -21,7 +21,7 @@ listFormBtn.addEventListener("click", async (e) => {
 
   console.log(addedTodoList);
 
-  if (addedTodoList.status === 200) {
+  if (addedTodoList.status === 201) {
     const html = document.createElement("div");
     html.class = "generatedListMainDiv";
     html.innerHTML = `
@@ -33,29 +33,30 @@ listFormBtn.addEventListener("click", async (e) => {
     </div>
   `;
     listContainer.appendChild(html);
+
+    document
+      .querySelector(".generatedListTodoBtn")
+      .addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        console.log("generatedListTodoBtn clicked");
+        const todo = document.createElement("div");
+        todo.class = "generatedTodo";
+        todo.innerHTML = `
+          <div class="todo">
+            <input type="checkbox" class="todo-checkbox" />
+            <p class="todo-text"> text here </p>
+            <button class="todo-delete">Delete</button>
+          </div>
+        `;
+        const list = document.querySelector(".generatedListForm");
+        list.appendChild(todo);
+      });
   } else {
     alert(addedTodoList.status);
   }
-
-  document
-    .querySelector(".generatedListTodoBtn")
-    .addEventListener("click", async (e) => {
-      e.preventDefault();
-
-      const todo = document.createElement("div");
-      todo.class = "generatedTodo";
-      todo.innerHTML = `
-      <div class="generatedListForm form">
-        <p class="generatedListName">${userInput}</p>
-        <button class="generatedListTodoBtn">Add Todo</button>
-        <button class="generatedListDeleteBtn">Delete</button>
-        <div class="generatedListTodoDiv"></div>
-      </div>
-    `;
-    });
 });
 
-// Kan göras om så den funkar på ALLA knappar
 function toogle() {
   if (listForm.style.display === "none") {
     listForm.style.display = "block";
