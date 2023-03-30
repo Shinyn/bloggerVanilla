@@ -8,6 +8,7 @@ const { loginRoute } = require("./routes/loginRoute.js");
 const { checkAuthentication } = require("./middlewares/checkAuthentication.js");
 const { todoRoute } = require("./routes/todoRoute.js");
 const { listRoute } = require("./routes/listRoute.js");
+const { friendRoute } = require("./routes/friendRoute.js");
 
 server.use(express.json());
 server.use(cookieParser());
@@ -21,16 +22,9 @@ server.use("/todo", checkAuthentication, todoRoute);
 
 server.use("/todoList", checkAuthentication, listRoute);
 
-server.get("/homepage", checkAuthentication, (req, res) => {
-  const { username } = req.loggedInUser;
-  res.send(username);
-  return;
-});
+server.use("/friends", checkAuthentication, friendRoute);
 
-// FIXME:
-// server.use("/friends", checkAuthentication, friendRoute);
-server.get("/friends", (req, res) => {});
-
+//TODO: Denna ska bort så småningom
 server.get("/", getDatabase);
 
 server.listen(5050);
