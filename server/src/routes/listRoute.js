@@ -1,15 +1,13 @@
 const express = require("express");
 const { addList } = require("../controllers/listController/addList");
-const { updateTodo } = require("../controllers/updateTodo");
+const { deleteList } = require("../controllers/listController/deleteList");
+const { getLists } = require("../controllers/listController/getLists");
 const listRoute = express.Router();
 
 listRoute.post("/", addList);
 
-listRoute.delete("/");
+listRoute.get("/", getLists);
 
-// Ska uppdatera checkboxen i todon (eller om det är todoList)
-// listRoute.patch("/", updateTodo);
-
-// listRoute.get("/", addList);
+listRoute.delete("/", deleteList);
 
 exports.listRoute = listRoute;

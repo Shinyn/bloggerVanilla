@@ -2,7 +2,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const server = express();
-const { getDatabase } = require("./getDatabase.js");
 const { registerRoute } = require("./routes/registerRoute.js");
 const { loginRoute } = require("./routes/loginRoute.js");
 const { checkAuthentication } = require("./middlewares/checkAuthentication.js");
@@ -23,8 +22,5 @@ server.use("/todo", checkAuthentication, todoRoute);
 server.use("/todoList", checkAuthentication, listRoute);
 
 server.use("/friends", checkAuthentication, friendRoute);
-
-//TODO: Denna ska bort så småningom
-server.get("/", getDatabase);
 
 server.listen(5050);

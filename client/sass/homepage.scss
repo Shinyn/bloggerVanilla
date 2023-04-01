@@ -6,14 +6,18 @@
 }
 
 .form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   border: double 3px goldenrod;
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.797);
-  width: 400px;
+  width: 500px;
   margin: 10px;
   padding: 15px;
 
   #listNameInput {
+    width: 300px;
     margin: 5px;
     padding: 5px;
   }
@@ -49,9 +53,9 @@
 }
 
 body {
-  // display: flex;
-  // flex-direction: column;
-  // flex-basis: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1 {
@@ -61,6 +65,7 @@ h1 {
   font-size: 2rem;
   padding: 10px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 button {
@@ -80,10 +85,8 @@ button {
 }
 
 .homepage-lists {
-  // display: grid;
   bottom: 0;
   right: 0;
-  // background-color: aqua;
 }
 
 .generatedListForm {
@@ -91,7 +94,4 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  height: 650px;
 }
-
-// border-bottom: solid rgb(228, 255, 77) 3px;

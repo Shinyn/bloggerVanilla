@@ -6,14 +6,18 @@
 }
 
 .form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   border: double 3px goldenrod;
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.797);
-  width: 400px;
+  width: 500px;
   margin: 10px;
   padding: 15px;
 }
 .form #listNameInput {
+  width: 300px;
   margin: 5px;
   padding: 5px;
 }
@@ -42,6 +46,12 @@
   text-decoration-color: rgba(255, 255, 255, 0.785);
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 h1 {
   background-color: rgba(6, 30, 84, 0.59);
   color: rgba(255, 255, 255, 0.804);
@@ -49,6 +59,7 @@ h1 {
   font-size: 2rem;
   padding: 10px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 button {
@@ -76,7 +87,6 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  height: 650px;
 }
 
 /*# sourceMappingURL=homepage.css.map */

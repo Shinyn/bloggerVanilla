@@ -3,9 +3,11 @@ const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.addTodo = async function addTodo(req, res) {
-  console.log(req);
   const { listID, isChecked, content } = req.body;
 
+  // TODO: Kanske senare om tid finns
+  // Måste kolla så att rätt användare lägger till todon till rätt lista
+  // använda joi för att kolla?
   const schema = joi.object({
     listID: joi.number().required(),
     isChecked: joi.number().required(),
@@ -21,7 +23,10 @@ exports.addTodo = async function addTodo(req, res) {
 
   const sql = `insert into todo (listID, marked, content) values (?, ?, ?)`;
   pool.execute(sql, [listID, isChecked, content], (error, result) => {
-    if (error) {
+    if (error && error.code === "ER_NO_REFERENCED_ROW_2") {
+      res.status(404).send("That list does not exist");
+      return;
+    } else if (error) {
       res.status(400).send(error);
       return;
     }

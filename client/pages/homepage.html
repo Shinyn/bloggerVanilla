@@ -11,17 +11,32 @@
   </head>
   <body>
     <h1>HOMEPAGE</h1>
-    <p>Logged in as:</p>
-    <span class="currentLoggedInUser"></span>
-    <button class="logoutBtn">Logout</button>
+    <label for="lists">Lists</label>
+    <select name="lists" id="listSelect">
+      <option value="empty">Choose list</option>
+    </select>
+
+    <!-- get alla listor - map - fetch?
+1. fetcha alla todolistor
+2. loopa igenom listorna och skriv ut i divs på sidan
+3. i loopen -> ny fetch för varje lista där alla tasks finns
+4. ny div för varje task i listan
+
+sätt listID på listan i value
+
+
+-->
+
     <!-- TODO: lägg till listor -->
-    <button id="openAddListBtn">Add List</button>
+    <!-- <button id="openAddListBtn">Add List</button> -->
     <div id="listForm" class="form">
       <input id="listNameInput" type="text" placeholder="Name" />
-      <button id="addListBtn">Create List</button>
+
+      <button id="addListBtn" value="här ska todoListID in">Create List</button>
     </div>
 
     <!-- Här stoppar jag in alla todo-listor -->
+    <!--TODO: Ska läggas i select istället ?? -->
     <div class="homepage-lists"></div>
 
     <!-- <div class="generatedTodoForm form">
@@ -29,15 +44,5 @@
       <button class="generatedTodoBtn">Add Todo</button>
       <button class="generatedDeleteBtn">Delete</button>
     </div> -->
-
-    <!-- 
-      Vad ska homepage ha?
-      1. lista med listor
-      add new list | show lists | remove list
-      2. lista med tasks
-      show tasks | add task | remove task
-      3. lista med friends
-      show friends | add friend | remove friend
-      -->
   </body>
 </html>

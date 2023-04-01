@@ -17,6 +17,7 @@ exports.deleteTodo = async function deleteTodo(req, res) {
       res.status(400).send(error);
       return;
     }
+    // Denna skickas när man kör delete (för den är inte klar än)
     res.status(302).send("Got listID");
     console.log(result);
     // Nu har vi alla listor - nu ska vi hämta rätt lista

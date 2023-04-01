@@ -14,6 +14,7 @@ exports.loginUser = async function loginUser(req, res) {
 
   const validation = schema.validate(req.body);
 
+  // Validerar request bodyn
   if (validation.error) {
     res.status(400).send(validation.error.details[0].message);
     return;
@@ -23,7 +24,7 @@ exports.loginUser = async function loginUser(req, res) {
   const getUser = `select * from users where username = ?`;
   pool.execute(getUser, [username], (err, resu) => {
     if (err || resu.length === 0) {
-      res.status(404).send(err);
+      res.status(404).send("User dosen't exist");
       return;
     }
 
