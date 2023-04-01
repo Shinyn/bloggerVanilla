@@ -20,6 +20,7 @@ exports.editTodo = async function editTodo(req, res) {
     return;
   }
 
+  // Borde kanske ha 2 edits - en för checkboxen och en för texten
   // Dubbelkolla ID här
   const sql = `update todo set content = ?, marked = ? where id = ?;`;
   pool.execute(sql, [content, isChecked, listID], (error, result) => {

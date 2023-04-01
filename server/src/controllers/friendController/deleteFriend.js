@@ -33,6 +33,11 @@ exports.deleteFriend = function deleteFriend(req, res) {
       return;
     }
 
+    if (currentUser == friendID) {
+      res.status(406).send("You cant remove yourself, if you dont have any friends, you're all you got");
+      return;
+    }
+
     // Detta tog tid att lista ut.. du kan inte ta bort en vän du inte har.
     const entries = Object.entries(resu);
     const friendArray = [];
@@ -44,11 +49,6 @@ exports.deleteFriend = function deleteFriend(req, res) {
 
     if (!foundFriend) {
       res.status(404).send("You cant remove a friend you dont have");
-      return;
-    }
-
-    if (currentUser == friendID) {
-      res.status(406).send("That is not possible");
       return;
     }
 

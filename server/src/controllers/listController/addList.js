@@ -7,7 +7,7 @@ exports.addList = async function addList(req, res) {
   const { userInput } = req.body;
 
   const schema = joi.object({
-    userInput: joi.string().min(1).required(),
+    userInput: joi.string().required(),
   });
   const validation = schema.validate(req.body);
 
