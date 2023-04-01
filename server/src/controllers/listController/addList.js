@@ -3,7 +3,6 @@ const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.addList = async function addList(req, res) {
-  // console.log("addList");
   const userID = req.loggedInUser.id;
   const { userInput } = req.body;
 
