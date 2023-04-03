@@ -1,7 +1,9 @@
 "use strict";
+const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.deleteList = async function deleteList(req, res) {
+  // Här ska JOI bort - kollar bara req.body TODO: ID skickas med req body
   const userID = req.loggedInUser.id;
 
   const schema = joi.object({

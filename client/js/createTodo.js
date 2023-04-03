@@ -7,11 +7,6 @@ listForm.style.display = "none";
 //FIXME:
 //FIXME: THIS IS NOT IMPLEMENTED - THIS IS OLD CODE THAT I REFERENCE TOO WHEN WORKING ON AN UPDATED VERSION
 //FIXME:
-/*
-1. Skapa todo lista
-2. Skapa todo i vald lista
-3. Lägg till vän
-*/
 
 listForm.addEventListener("submit", async (e) => {
   e.preventDefault();

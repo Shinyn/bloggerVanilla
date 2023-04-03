@@ -6,6 +6,10 @@ const listForm = document.querySelector("#listForm");
 const listFormBtn = document.querySelector("#addListBtn");
 const listSelect = document.querySelector("#listSelect");
 // listForm.style.display = "none";
+window.onload = (event) => {
+  console.log(event);
+  getLists();
+};
 
 listFormBtn.addEventListener("click", async (e) => {
   e.preventDefault();
@@ -22,6 +26,8 @@ listFormBtn.addEventListener("click", async (e) => {
     },
     credentials: "include",
   });
+
+  // withCredentials: true,
 
   if (addedTodoList.status === 201) {
     // hämta alla todolistor och stoppa in här - i separat funktion
@@ -69,3 +75,29 @@ listFormBtn.addEventListener("click", async (e) => {
 //     listForm.style.display = "none";
 //   }
 // }
+
+async function getLists() {
+  // Behöver köra en get på alla listor när man lägger till en lista också
+  try {
+    const lists = await fetch("http://127.0.0.1:5050/todoList", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await lists.json();
+    console.log(typeof data);
+    data.forEach((list) => {
+      console.log("Item in list:", list);
+    });
+
+    // listContainer <- här ska allt in
+  } catch (error) {
+    console.log("Something went wrong:", error);
+  }
+}
+
+function logout() {
+  console.log("ska sätta cookien authtoken till ett datum som redan varit");
+}

@@ -7,7 +7,6 @@ exports.addTodo = async function addTodo(req, res) {
 
   // TODO: Kanske senare om tid finns
   // Måste kolla så att rätt användare lägger till todon till rätt lista
-  // använda joi för att kolla?
   const schema = joi.object({
     listID: joi.number().required(),
     isChecked: joi.number().required(),

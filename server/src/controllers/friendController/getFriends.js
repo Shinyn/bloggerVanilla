@@ -2,6 +2,7 @@ const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.getFriends = function getFriends(req, res) {
+  // här ska joi bort - validerar bara req.body
   const currentUser = req.loggedInUser;
   const currentUserID = currentUser.id;
 

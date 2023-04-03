@@ -12,9 +12,9 @@ exports.loginUser = async function loginUser(req, res) {
     password: joi.string().min(3).max(20).required(),
   });
 
+  // Validerar request bodyn
   const validation = schema.validate(req.body);
 
-  // Validerar request bodyn
   if (validation.error) {
     res.status(400).send(validation.error.details[0].message);
     return;
@@ -24,7 +24,7 @@ exports.loginUser = async function loginUser(req, res) {
   const getUser = `select * from users where username = ?`;
   pool.execute(getUser, [username], (err, resu) => {
     if (err || resu.length === 0) {
-      res.status(404).send("User dosen't exist");
+      res.status(404).send("User doesn't exist");
       return;
     }
 
@@ -47,7 +47,7 @@ exports.loginUser = async function loginUser(req, res) {
           maxAge: 34560000000,
           sameSite: "none",
           // postman gillar inte när det är secure
-          // secure: true,
+          secure: true,
           httpOnly: true,
         });
         res.status(200).send("You are logged in");
