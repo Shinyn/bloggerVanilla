@@ -97,7 +97,7 @@ async function getLists() {
         <div class="generatedListTodoDiv"></div>
         </div>
         `;
-        // html.style.display = "none";
+        html.style.display = "none";
         listContainer.appendChild(html);
         //FIXME:------------------------------------------------<<<<<<<<<<<<<<<<<<<<<<<
         listArr.push(list.id); // förmodligen onödig
@@ -143,14 +143,16 @@ listSelect.addEventListener("change", (e) => {
   const content = listSelect.options[listSelect.selectedIndex].text;
   const value = listSelect.value;
   console.log(value, content);
-  // Ska visa den lista som klickas
-  // if (html.style.display === "none") {
-  //   html.style.display = "block";
-  // } else {
-  //   html.style.display = "none";
-  // }
+
+  const el = document.getElementById(`${value}`);
+  console.log(el);
+  if (el.style.display === "none") {
+    el.style.display = "block";
+  } else {
+    el.style.display = "none";
+  }
 
   // getTodos(value);
 });
 
-//FIXME: Jag vill att när man klickar på en option i select drop-down'en så ska den genererade html snutten assosierad med den visas.
+//FIXME: Jag vill att när man klickar på en option i select drop-down'en så ska den genererade html snutten associerad med den visas.
