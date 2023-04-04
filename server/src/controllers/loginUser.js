@@ -32,7 +32,7 @@ exports.loginUser = async function loginUser(req, res) {
     const getPassword = `select * from users where username = ?`;
     pool.execute(getPassword, [username], (error, result) => {
       if (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
         return;
       }
 

@@ -55,7 +55,7 @@ exports.deleteFriend = function deleteFriend(req, res) {
     const sql = `delete from friendship where userID = ? and friendID = ?;`;
     pool.execute(sql, [currentUser, friendID], (error, result) => {
       if (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
         return;
       }
       res.status(200).send("Friend deleted");

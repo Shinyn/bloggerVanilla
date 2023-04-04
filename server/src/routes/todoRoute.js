@@ -9,8 +9,8 @@ todoRoute.post("/", addTodo);
 
 todoRoute.patch("/", editTodo);
 
-todoRoute.delete("/", deleteTodo);
+todoRoute.delete("/:id", deleteTodo);
 
-todoRoute.get("/", getTodo);
+todoRoute.get("/:id", getTodo);
 
 exports.todoRoute = todoRoute;

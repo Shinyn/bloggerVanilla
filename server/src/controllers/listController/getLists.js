@@ -11,13 +11,13 @@ exports.getLists = function getLists(req, res) {
   const sql = `select * from todoList where userID = ?`;
   pool.execute(sql, [userID], (error, result) => {
     if (error) {
-      res.status(400).send(error);
+      res.status(500).send(error);
       return;
     }
     if (result.length === 0) {
       res.status(404).send("You dont have any lists");
       return;
     }
-    res.status(302).send(result);
+    res.status(200).send(result);
   });
 };

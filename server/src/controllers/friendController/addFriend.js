@@ -37,7 +37,7 @@ exports.addFriend = function addFriend(req, res) {
         res.status(406).send("You already have that friend in your friendlist");
         return;
       } else if (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
         return;
       }
       res.status(200).send("Friend added");

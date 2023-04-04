@@ -1,35 +1,33 @@
-"use strict";
 const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.addTodo = async function addTodo(req, res) {
-  const { listID, isChecked, content } = req.body;
-
+  const { listID, content } = req.body;
+  console.log(req.body);
   // TODO: Kanske senare om tid finns
   // Måste kolla så att rätt användare lägger till todon till rätt lista
   const schema = joi.object({
     listID: joi.number().required(),
-    isChecked: joi.number().required(),
     content: joi.string().min(1).required(),
   });
 
   const validation = schema.validate(req.body);
 
   if (validation.error) {
-    res.status(400).send(validation.error.details[0].message);
+    res.status(400).json(validation.error.details[0].message);
     return;
   }
 
   const sql = `insert into todo (listID, marked, content) values (?, ?, ?)`;
-  pool.execute(sql, [listID, isChecked, content], (error, result) => {
+  pool.execute(sql, [listID, 0, content], (error, result) => {
     if (error && error.code === "ER_NO_REFERENCED_ROW_2") {
-      res.status(404).send("That list does not exist");
+      res.status(404).json("That list does not exist");
       return;
     } else if (error) {
-      res.status(400).send(error);
+      res.status(500).json(error);
       return;
     }
-    res.status(201).send("Added new todo to list");
+    res.status(201).json({ content: content, completed: 0, id: result.insertId });
   });
 };
 

@@ -16,7 +16,7 @@ exports.editTodo = async function editTodo(req, res) {
   const validation = schema.validate(req.body);
 
   if (validation.error) {
-    res.status(411).send(validation.error.details[0].message);
+    res.status(411).json(validation.error.details[0].message);
     return;
   }
 
@@ -25,9 +25,9 @@ exports.editTodo = async function editTodo(req, res) {
   const sql = `update todo set content = ?, marked = ? where id = ?;`;
   pool.execute(sql, [content, isChecked, listID], (error, result) => {
     if (error) {
-      res.status(400).send(error);
+      res.status(500).json(error);
       return;
     }
-    res.status(202).send("Updated todo");
+    res.status(200).json("Updated todo");
   });
 };

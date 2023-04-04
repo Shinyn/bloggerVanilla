@@ -8,6 +8,6 @@ listRoute.post("/", addList);
 
 listRoute.get("/", getLists);
 
-listRoute.delete("/", deleteList);
+listRoute.delete("/:id", deleteList);
 
 exports.listRoute = listRoute;

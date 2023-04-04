@@ -21,7 +21,7 @@ exports.getFriends = function getFriends(req, res) {
   const sql = `select * from users where id != ?`;
   pool.execute(sql, [currentUserID], (error, result) => {
     if (error) {
-      res.status(400).send(error);
+      res.status(500).send(error);
       return;
     }
     res.status(200).send(result);

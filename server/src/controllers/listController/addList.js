@@ -19,7 +19,7 @@ exports.addList = async function addList(req, res) {
   const sql = `insert into todoList (userID, listName) values (?, ?)`;
   pool.execute(sql, [userID, userInput], (error, result) => {
     if (error) {
-      res.status(400).send(error);
+      res.status(500).send(error);
       return;
     }
     res.status(201).send("Created new todo-list");
