@@ -5,9 +5,9 @@ const listContainer = document.querySelector(".homepage-lists");
 const listForm = document.querySelector("#listForm");
 const listFormBtn = document.querySelector("#addListBtn");
 const listSelect = document.querySelector("#listSelect");
+const listArr = [];
 // listForm.style.display = "none";
 window.onload = (event) => {
-  console.log(event);
   getLists();
 };
 
@@ -27,25 +27,11 @@ listFormBtn.addEventListener("click", async (e) => {
     credentials: "include",
   });
 
-  // withCredentials: true,
-
+  console.log(addedTodoList.status);
   if (addedTodoList.status === 201) {
-    // hämta alla todolistor och stoppa in här - i separat funktion
-    const option = document.createElement("option");
-    option.text = userInput;
-    listSelect.add(option);
-    const html = document.createElement("div");
-    html.class = "generatedListMainDiv";
-    html.innerHTML = `
-      <div class="generatedListForm form">
-        <p class="generatedListName">${userInput}</p>
-        <button class="generatedListTodoBtn" value="todoListID ska in här">Add Todo</button>
-        <button class="generatedListDeleteBtn" value="todoListID ska in här">Delete</button>
-        <div class="generatedListTodoDiv"></div>
-      </div>
-    `;
-    listContainer.appendChild(html);
-    // -----------------------
+    getLists();
+    console.log("after getLists");
+    // -----------TODO: Man kommer aldrig hit ner------------
     document.querySelector(".generatedListTodoBtn").addEventListener("click", async (e) => {
       e.preventDefault();
       console.log("generatedListTodoBtn clicked");
@@ -77,7 +63,6 @@ listFormBtn.addEventListener("click", async (e) => {
 // }
 
 async function getLists() {
-  // Behöver köra en get på alla listor när man lägger till en lista också
   try {
     const lists = await fetch("http://127.0.0.1:5050/todoList", {
       method: "GET",
@@ -86,18 +71,86 @@ async function getLists() {
       },
       credentials: "include",
     });
-    const data = await lists.json();
-    console.log(typeof data);
-    data.forEach((list) => {
-      console.log("Item in list:", list);
-    });
-
-    // listContainer <- här ska allt in
+    const response = await lists;
+    if (response.status === 302) {
+      const data = await lists.json();
+      //TODO:------------------------------------------------<<<<<<<<<<<<<<<<<<<<<<<<
+      // Förhindrar att det blir dubletter av listorna och options
+      listSelect.replaceChildren();
+      listContainer.replaceChildren();
+      // ---
+      const empty = document.createElement("option");
+      empty.text = "-Choose list-";
+      empty.value = "-Choose list-";
+      listSelect.add(empty);
+      // ---
+      data.forEach((list) => {
+        const html = document.createElement("div");
+        html.class = "generatedListMainDiv";
+        html.id = `${list.id}`;
+        html.innerHTML = `
+        <div class="generatedListForm form">
+        <p class="generatedListName">${list.listName}</p>
+        <input></input>
+        <button class="generatedListTodoBtn" value="${list.id}">Add Todo</button>
+        <button class="generatedListDeleteBtn" value="${list.id}">Delete</button>
+        <div class="generatedListTodoDiv"></div>
+        </div>
+        `;
+        // html.style.display = "none";
+        listContainer.appendChild(html);
+        //FIXME:------------------------------------------------<<<<<<<<<<<<<<<<<<<<<<<
+        listArr.push(list.id); // förmodligen onödig
+        const option = document.createElement("option");
+        option.text = list.listName;
+        option.value = list.id;
+        listSelect.add(option);
+        // Här kör en ny fetch mot todo
+        //TODO:
+        //TODO:
+      });
+      // getTodos(list.id);
+    } else {
+      alert("Unexpected error");
+      return;
+    }
   } catch (error) {
     console.log("Something went wrong:", error);
   }
 }
 
-function logout() {
-  console.log("ska sätta cookien authtoken till ett datum som redan varit");
+// function logout() {
+//   console.log("ska sätta cookien authtoken till ett datum som redan varit");
+// }
+
+async function getTodos(id) {
+  console.log("list id for todo:", id);
+  try {
+    const todos = await fetch(`http://127.0.0.1:5050/todo?id=${id}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
+    });
+    console.log("todos:", todos);
+  } catch (error) {
+    console.log("Something went wrong:", error);
+  }
 }
+
+listSelect.addEventListener("change", (e) => {
+  const content = listSelect.options[listSelect.selectedIndex].text;
+  const value = listSelect.value;
+  console.log(value, content);
+  // Ska visa den lista som klickas
+  // if (html.style.display === "none") {
+  //   html.style.display = "block";
+  // } else {
+  //   html.style.display = "none";
+  // }
+
+  // getTodos(value);
+});
+
+//FIXME: Jag vill att när man klickar på en option i select drop-down'en så ska den genererade html snutten assosierad med den visas.
