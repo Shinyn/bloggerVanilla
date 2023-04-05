@@ -9,7 +9,7 @@ friendRoute.post("/:id", addFriend);
 
 friendRoute.get("/", getFriends);
 
-friendRoute.get("/:id", getAddedFriends);
+friendRoute.get("/added", getAddedFriends);
 
 friendRoute.delete("/", deleteFriend);
 

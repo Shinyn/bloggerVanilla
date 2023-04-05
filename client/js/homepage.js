@@ -2,8 +2,10 @@ const listContainer = document.querySelector(".homepage-lists");
 const addListBtn = document.querySelector("#addListBtn");
 const listSelect = document.querySelector("#listSelect");
 const usersContainer = document.querySelector("#users-container");
+const addedFriendsContainer = document.querySelector("#friends-container");
 getLists();
 getUsers();
+getAddedFriends();
 
 listSelect.addEventListener("change", (e) => {
   hideAllLists();
@@ -322,6 +324,28 @@ async function addFriend(id) {
   const data = await response.json();
   if (response.status === 200) {
     alert("Friend added");
+  } else {
+    alert(data);
+    return;
+  }
+}
+
+async function getAddedFriends() {
+  const response = await fetch("http://127.0.0.1:5050/friends/added", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  if (response.status === 200) {
+    data.forEach((friend) => {
+      console.log(friend);
+      // TODO: Behöver usename istället för id här - kanske ändra queryn till databasen med join och så. För trött just nu..
+      addedFriendsContainer.append(friend.friendID);
+    });
   } else {
     alert(data);
     return;
