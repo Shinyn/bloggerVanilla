@@ -117,7 +117,6 @@ async function addTodo(id, content, todoContainer) {
   });
   if (respons.status === 201) {
     const data = await respons.json();
-    console.log("data is", data);
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("todo-checkbox");
@@ -146,6 +145,9 @@ async function deleteTodo(id) {
   const respons = await fetch(`http://127.0.0.1:5050/todoList/${id}`, {
     method: "DELETE",
     credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
   });
 
   if (respons.status === 200) {
@@ -212,7 +214,6 @@ async function patchTodo(id, completed) {
   }
 }
 
-// Checkboxen ska ha värdet som den har i databasen (Avbockad eller Ej)
 async function populateTodos(id) {
   // Listan
   const todos = await getTodos(id);
@@ -229,7 +230,6 @@ async function populateTodos(id) {
     if (todo.marked === 1) {
       input.checked = true;
     }
-
     // Lägger på en eventListener på checkbox och kör PATCH vid ändring
     input.addEventListener("change", function () {
       if (this.checked) {
@@ -252,7 +252,6 @@ async function populateTodos(id) {
 
     todoContainer.append(separatorDiv);
   });
-  // console.log("mina todos");
 }
 
 // // function logout() {
@@ -261,5 +260,3 @@ async function populateTodos(id) {
 
 // const content = listSelect.options[listSelect.selectedIndex].text;
 // Behövs för att göra GET till todos
-
-// getTodos(value);

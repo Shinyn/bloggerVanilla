@@ -3,8 +3,6 @@ const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.editTodo = async function editTodo(req, res) {
-  // console.log("params", req.params);
-  console.log("body", req.body);
   const { todoID, isChecked } = req.body;
 
   const schema = joi.object({

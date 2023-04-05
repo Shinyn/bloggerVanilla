@@ -3,7 +3,6 @@ const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.deleteTodo = async function deleteTodo(req, res) {
-  console.log(req);
   const userID = req.loggedInUser.id;
   console.log("Delete Todo");
 
@@ -15,11 +14,11 @@ exports.deleteTodo = async function deleteTodo(req, res) {
   const listIDs = `select * from todoList where userID = ?;`;
   pool.execute(listIDs, [userID], (error, result) => {
     if (error) {
-      res.status(400).send(error);
+      res.status(400).json(error);
       return;
     }
     // Denna skickas när man kör delete (för den är inte klar än)
-    res.status(302).send("Got listID");
+    res.status(302).json("Got listID");
     console.log(result);
     // Nu har vi alla listor - nu ska vi hämta rätt lista
     const todoIDs = `select * from todo where listIDs = ?;`;
@@ -30,9 +29,9 @@ exports.deleteTodo = async function deleteTodo(req, res) {
   //   const sql = `delete from todo where id = ?;`;
   //   pool.execute(sql, [id], (error, result) => {
   //     if (error) {
-  //       res.status(400).send(error);
+  //       res.status(400).json(error);
   //       return;
   //     }
-  //     res.status(202).send("Updated todo");
+  //     res.status(202).json("Updated todo");
   //   });
 };
