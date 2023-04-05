@@ -322,12 +322,10 @@ async function addFriend(id) {
   const data = await response.json();
   if (response.status === 200) {
     alert("Friend added");
-  }
-  if (response.status === 500) {
+  } else {
     alert(data);
     return;
   }
-  console.log("ehh");
 }
 // // function logout() {
 // //   console.log("ska sätta cookien authtoken till ett datum som redan varit");
