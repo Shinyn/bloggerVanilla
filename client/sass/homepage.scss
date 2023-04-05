@@ -53,9 +53,35 @@
 }
 
 body {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .users-container {
+    position: relative;
+    width: 99%;
+    height: 100vh;
+    background-color: royalblue;
+
+    #friend-div,
+    #users-div {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      color: rgba(255, 255, 255, 0.493);
+      background-color: rgba(102, 51, 153, 0.486);
+    }
+
+    #friend-div {
+      left: 0;
+    }
+
+    #users-div {
+      right: 0;
+    }
+  }
 }
 
 h1 {

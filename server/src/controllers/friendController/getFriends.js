@@ -1,29 +1,17 @@
-const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.getFriends = function getFriends(req, res) {
-  // här ska joi bort - validerar bara req.body
   const currentUser = req.loggedInUser;
   const currentUserID = currentUser.id;
 
-  const schema = joi.object({
-    id: joi.number().required(),
-    username: joi.string().required(),
-    iat: joi.number().required(),
-  });
-  const validation = schema.validate(currentUser);
+  //TODO: validation
 
-  if (validation.error) {
-    res.status(404).send(validation.error.details[0].message);
-    return;
-  }
-
-  const sql = `select * from users where id != ?`;
+  const sql = `select id, username from users where id != ?`;
   pool.execute(sql, [currentUserID], (error, result) => {
     if (error) {
-      res.status(500).send(error);
+      res.status(500).json(error);
       return;
     }
-    res.status(200).send(result);
+    res.status(200).json(result);
   });
 };

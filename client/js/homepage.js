@@ -1,9 +1,9 @@
-// const listNameInput = document.querySelector("#listNameInput");
 const listContainer = document.querySelector(".homepage-lists");
-// const listForm = document.querySelector("#listForm");
 const addListBtn = document.querySelector("#addListBtn");
 const listSelect = document.querySelector("#listSelect");
+const usersContainer = document.querySelector("#users-container");
 getLists();
+getUsers();
 
 listSelect.addEventListener("change", (e) => {
   hideAllLists();
@@ -286,6 +286,23 @@ async function populateTodos(id) {
   });
 }
 
+async function getUsers() {
+  const response = await fetch("http://127.0.0.1:5050/friends", {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  if (response.status === 200) {
+    const data = await response.json();
+    console.log("Here are the users:", data);
+    data.forEach((user) => {
+      usersContainer.append(" \n", user.username);
+    });
+  }
+}
 // // function logout() {
 // //   console.log("ska sätta cookien authtoken till ett datum som redan varit");
 // // }

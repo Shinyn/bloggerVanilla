@@ -2,7 +2,6 @@ const { pool } = require("../../database");
 
 exports.deleteTodo = async function deleteTodo(req, res) {
   const id = req.params.id;
-  console.log("gonna delete todo:", id);
 
   //TODO: Validering
 

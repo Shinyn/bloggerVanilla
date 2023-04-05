@@ -1,5 +1,3 @@
-"use strict";
-
 const usernameInput = document.querySelector("#loginFormUsername");
 const passwordInput = document.querySelector("#loginFormPassword");
 const form = document.querySelector(".loginForm");

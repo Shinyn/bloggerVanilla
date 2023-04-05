@@ -11,36 +11,36 @@ exports.addFriend = function addFriend(req, res) {
   const validation = schema.validate(req.body);
 
   if (validation.error) {
-    res.status(404).send(validation.error.details[0].message);
+    res.status(400).json(validation.error.details[0].message);
     return;
   }
 
   if (currentUser == friendID) {
-    res.status(406).send("You cant add yourself");
+    res.status(400).json("You cant add yourself");
     return;
   }
 
   const users = `select * from users where id != ?`;
   pool.execute(users, [currentUser], (err, resu) => {
     if (err) {
-      res.status(400).send(err);
+      res.status(500).json(err);
       return;
     }
     if (friendID > resu.length || friendID <= 0) {
-      res.status(404).send("That user does not exist");
+      res.status(404).json("That user does not exist");
       return;
     }
 
     const sql = `insert into friendship (userID, friendID) values (?, ?);`;
     pool.execute(sql, [currentUser, friendID], (error, result) => {
       if (error && error.code === "ER_DUP_ENTRY") {
-        res.status(406).send("You already have that friend in your friendlist");
+        res.status(500).json("You already have that friend in your friendlist");
         return;
       } else if (error) {
-        res.status(500).send(error);
+        res.status(500).json(error);
         return;
       }
-      res.status(200).send("Friend added");
+      res.status(200).json("Friend added");
     });
   });
 };

@@ -13,7 +13,7 @@ exports.registerUser = function registerUser(req, res) {
   const validation = schema.validate(req.body);
 
   if (validation.error) {
-    res.status(400).send(validation.error.details[0].message);
+    res.status(400).json(validation.error.details[0].message);
     return;
   }
 
@@ -21,13 +21,13 @@ exports.registerUser = function registerUser(req, res) {
   const sql = `insert into users (username, password) values (?, ?)`;
   pool.execute(sql, [username, hashedPassword], (error, result) => {
     if (error && error.code === "ER_DUP_ENTRY") {
-      res.status(400).send("That username is taken, pick another one");
+      res.status(400).json("That username is taken, pick another one");
       return;
     }
     if (error) {
-      res.status(500).send(error);
+      res.status(500).json(error);
       return;
     }
-    res.status(201).send("Account created");
+    res.status(201).json("Account created");
   });
 };

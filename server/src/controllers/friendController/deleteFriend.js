@@ -16,7 +16,6 @@ exports.deleteFriend = function deleteFriend(req, res) {
     return;
   }
 
-  // check if you have the friend in your list
   const checkFriends = `select * from friendship where userID = ?;`;
   pool.execute(checkFriends, [currentUser], (err, resu) => {
     if (err) {
@@ -34,11 +33,10 @@ exports.deleteFriend = function deleteFriend(req, res) {
     }
 
     if (currentUser == friendID) {
-      res.status(406).send("You cant remove yourself, if you dont have any friends, you're all you got");
+      res.status(400).send("You cant remove yourself, if you dont have any friends, you're all you got");
       return;
     }
 
-    // Detta tog tid att lista ut.. du kan inte ta bort en vän du inte har.
     const entries = Object.entries(resu);
     const friendArray = [];
     entries.forEach((item) => friendArray.push(item[1]));
@@ -58,7 +56,7 @@ exports.deleteFriend = function deleteFriend(req, res) {
         res.status(500).send(error);
         return;
       }
-      res.status(200).send("Friend deleted");
+      res.status(200).send("Removed friend");
     });
   });
 };

@@ -10,17 +10,34 @@
   </head>
   <body>
     <h1>HOMEPAGE</h1>
-    <label for="lists">Lists</label>
-    <select name="lists" id="listSelect">
-      <option value="empty">-Choose list-</option>
-    </select>
+    <!-- Select lists -->
+    <div id="select-div">
+      <label for="lists">Lists</label>
+      <select name="lists" id="listSelect">
+        <option value="empty">-Choose list-</option>
+      </select>
+    </div>
 
+    <!-- Add list -->
     <div id="listForm" class="form">
       <input id="listNameInput" type="text" placeholder="Name" />
       <button id="addListBtn">Create List</button>
     </div>
 
-    <!-- Här stoppar jag in alla todo-listor -->
+    <!-- Insert todo-lists -->
     <div class="homepage-lists"></div>
+
+    <!-- Friends and Users -->
+    <div class="users-container">
+      <div id="friend-div">
+        <p>Friends</p>
+        <div id="friends-container"></div>
+      </div>
+
+      <div id="users-div">
+        <p>Users</p>
+        <div id="users-container"></div>
+      </div>
+    </div>
   </body>
 </html>

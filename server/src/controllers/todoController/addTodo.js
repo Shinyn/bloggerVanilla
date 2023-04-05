@@ -27,7 +27,3 @@ exports.addTodo = async function addTodo(req, res) {
     res.status(201).json({ content: content, completed: 0, id: result.insertId });
   });
 };
-
-//FIXME: Får du "jwt error" - null / undefined === postman secure buggen!!!
-//FIXME: isChecked måste va 0 för false och 1 för true
-//FIXME: Kör du i postman får du alltid in id som en string!!!
