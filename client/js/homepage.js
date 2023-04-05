@@ -58,7 +58,7 @@ async function getLists() {
       return alert("Server error");
     }
     if (response.status === 404) {
-      return alert("Not found");
+      return console.log("You currently have no lists");
     }
     if (response.status === 200) {
       const lists = await response.json();
@@ -81,24 +81,27 @@ function populateContainer(list) {
   const html = document.createElement("div");
   html.classList.add("generatedListMainDiv", "generatedListForm", "form");
   html.id = `${list.id}`;
+
   const p = document.createElement("p");
   p.classList.add("generatedListName");
   p.textContent = list.listName;
+
   const input = document.createElement("input");
   const addTodoBtn = document.createElement("button");
   addTodoBtn.textContent = "Add Todo";
   addTodoBtn.classList.add("generatedListTodoBtn");
-  const deleteTodoBtn = document.createElement("button");
-  deleteTodoBtn.textContent = "Delete";
-  deleteTodoBtn.classList.add("generatedListDeleteBtn");
+
+  const deleteTodoListBtn = document.createElement("button");
+  deleteTodoListBtn.textContent = "Delete";
+  deleteTodoListBtn.classList.add("generatedListDeleteBtn");
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("generatedListTodoDiv");
 
-  html.append(p, input, addTodoBtn, deleteTodoBtn, todoDiv);
+  html.append(p, input, addTodoBtn, deleteTodoListBtn, todoDiv);
 
   addTodoBtn.addEventListener("click", () => addTodo(list.id, input.value, todoDiv));
 
-  deleteTodoBtn.addEventListener("click", () => deleteTodo(list.id));
+  deleteTodoListBtn.addEventListener("click", () => deleteTodoList(list.id));
   html.style.display = "none";
   listContainer.appendChild(html);
 }
@@ -131,6 +134,12 @@ async function addTodo(id, content, todoContainer) {
     separatorDiv.append(checkbox, p, deleteBtn);
     todoContainer.append(separatorDiv);
 
+    deleteBtn.addEventListener("click", function () {
+      console.log("clicked delete");
+      deleteTodo(data.id);
+      getTodos(id);
+    });
+
     checkbox.addEventListener("change", function () {
       if (this.checked) {
         patchTodo(data.id, 1);
@@ -141,8 +150,25 @@ async function addTodo(id, content, todoContainer) {
   }
 }
 
-async function deleteTodo(id) {
+async function deleteTodoList(id) {
   const respons = await fetch(`http://127.0.0.1:5050/todoList/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+
+  if (respons.status === 200) {
+    getLists();
+    //FIXME:
+    // Förmodligen ett dåligt sätt att göra det på men det funkar - METIN
+    // location.reload();
+  }
+}
+
+async function deleteTodo(id) {
+  const respons = await fetch(`http://127.0.0.1:5050/todo/${id}`, {
     method: "DELETE",
     credentials: "include",
     headers: {
@@ -223,7 +249,7 @@ async function populateTodos(id) {
   todoContainer.replaceChildren();
   // För varje element i listan
   todos.forEach((todo) => {
-    console.log(todo);
+    console.log("Todo from forEach loop:", todo);
     const input = document.createElement("input");
     input.type = "checkbox";
     input.classList.add("todo-checkbox");
@@ -246,6 +272,12 @@ async function populateTodos(id) {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.classList.add("todo-delete");
+
+    // Re-adds eventListener to delete button when fetched from database
+    deleteBtn.addEventListener("click", function () {
+      deleteTodo(todo.id);
+      getTodos(todo.listID);
+    });
 
     const separatorDiv = document.createElement("div");
     separatorDiv.append(input, p, deleteBtn);

@@ -1,37 +1,23 @@
-"use strict";
-const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.deleteTodo = async function deleteTodo(req, res) {
-  const userID = req.loggedInUser.id;
-  console.log("Delete Todo");
+  const id = req.params.id;
+  console.log("gonna delete todo:", id);
 
   //TODO: Validering
-  //TODO: Hur ska jag få todo id? - GET till databasen där du hämtar listan med userID och sen ListID sen TodoID???
-  // get listID from todoList where userId = req.body.id
-  // get todoID from todo where listID = listID
 
-  const listIDs = `select * from todoList where userID = ?;`;
-  pool.execute(listIDs, [userID], (error, result) => {
+  if (!id) {
+    res.status(404).send("Todo does not exist");
+    return;
+  }
+
+  const sql = `delete from todo where id = ?;`;
+  pool.execute(sql, [id], (error, result) => {
     if (error) {
-      res.status(400).json(error);
+      console.log(error);
+      res.status(500).json(error);
       return;
     }
-    // Denna skickas när man kör delete (för den är inte klar än)
-    res.status(302).json("Got listID");
-    console.log(result);
-    // Nu har vi alla listor - nu ska vi hämta rätt lista
-    const todoIDs = `select * from todo where listIDs = ?;`;
-    pool.execute(todoIDs, []);
+    res.status(200).json(result);
   });
-
-  //   console.log(userLists);
-  //   const sql = `delete from todo where id = ?;`;
-  //   pool.execute(sql, [id], (error, result) => {
-  //     if (error) {
-  //       res.status(400).json(error);
-  //       return;
-  //     }
-  //     res.status(202).json("Updated todo");
-  //   });
 };

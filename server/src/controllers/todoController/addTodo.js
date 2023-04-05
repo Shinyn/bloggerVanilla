@@ -3,9 +3,6 @@ const { pool } = require("../../database");
 
 exports.addTodo = async function addTodo(req, res) {
   const { listID, content } = req.body;
-  console.log(req.body);
-  // TODO: Kanske senare om tid finns
-  // Måste kolla så att rätt användare lägger till todon till rätt lista
   const schema = joi.object({
     listID: joi.number().required(),
     content: joi.string().min(1).required(),
