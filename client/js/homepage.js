@@ -299,9 +299,35 @@ async function getUsers() {
     const data = await response.json();
     console.log("Here are the users:", data);
     data.forEach((user) => {
-      usersContainer.append(" \n", user.username);
+      const p = document.createElement("p");
+      p.textContent = user.username;
+      p.classList.add("generated-users");
+      p.addEventListener("click", function () {
+        console.log("clicked user", user.id);
+        addFriend(user.id);
+      });
+      usersContainer.append(p);
     });
   }
+}
+
+async function addFriend(id) {
+  const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (response.status === 200) {
+    alert("Friend added");
+  }
+  if (response.status === 500) {
+    alert(data);
+    return;
+  }
+  console.log("ehh");
 }
 // // function logout() {
 // //   console.log("ska sätta cookien authtoken till ett datum som redan varit");

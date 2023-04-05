@@ -20,12 +20,7 @@ form.addEventListener("submit", async (e) => {
 
     const message = await respons.text();
 
-    if (respons.status === 404) {
-      alert("No user with that name");
-      return;
-    }
-
-    if (respons.status === 401) {
+    if (respons.status !== 200) {
       alert(message);
       return;
     }

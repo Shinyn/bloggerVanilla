@@ -4,7 +4,7 @@ const { deleteFriend } = require("../controllers/friendController/deleteFriend")
 const { getFriends } = require("../controllers/friendController/getFriends");
 const friendRoute = express.Router();
 
-friendRoute.post("/", addFriend);
+friendRoute.post("/:id", addFriend);
 
 friendRoute.get("/", getFriends);
 

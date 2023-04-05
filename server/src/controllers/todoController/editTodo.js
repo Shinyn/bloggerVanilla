@@ -13,7 +13,7 @@ exports.editTodo = async function editTodo(req, res) {
   const validation = schema.validate(req.body);
 
   if (validation.error) {
-    res.status(411).json(validation.error.details[0].message);
+    res.status(400).json(validation.error.details[0].message);
     return;
   }
 

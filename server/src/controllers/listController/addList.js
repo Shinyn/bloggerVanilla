@@ -12,16 +12,16 @@ exports.addList = async function addList(req, res) {
   const validation = schema.validate(req.body);
 
   if (validation.error) {
-    res.status(411).send(validation.error.details[0].message);
+    res.status(400).json(validation.error.details[0].message);
     return;
   }
 
   const sql = `insert into todoList (userID, listName) values (?, ?)`;
   pool.execute(sql, [userID, userInput], (error, result) => {
     if (error) {
-      res.status(500).send(error);
+      res.status(500).json(error);
       return;
     }
-    res.status(201).send("Created new todo-list");
+    res.status(201).json("Created new todo-list");
   });
 };

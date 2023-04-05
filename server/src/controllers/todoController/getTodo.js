@@ -3,7 +3,7 @@ const { pool } = require("../../database");
 exports.getTodo = function getTodo(req, res) {
   const listID = req.params.id;
 
-  if (Object.keys(req.body).length > 0) {
+  if (Object.keys(req.query).length > 0 || Object.keys(req.body).length > 0) {
     res.status(400).json("You are not allowed to enter data here");
     return;
   }
@@ -18,6 +18,6 @@ exports.getTodo = function getTodo(req, res) {
       res.status(404).json("You dont have any todos");
       return;
     }
-    res.status(302).json(result);
+    res.status(200).json(result);
   });
 };
