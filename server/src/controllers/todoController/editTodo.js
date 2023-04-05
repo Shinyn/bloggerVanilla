@@ -3,14 +3,13 @@ const joi = require("joi");
 const { pool } = require("../../database");
 
 exports.editTodo = async function editTodo(req, res) {
-  console.log(req);
-  console.log(req.body);
-  const { listID, isChecked, content } = req.body;
+  // console.log("params", req.params);
+  console.log("body", req.body);
+  const { todoID, isChecked } = req.body;
 
   const schema = joi.object({
-    listID: joi.number().required(),
+    todoID: joi.number().required(),
     isChecked: joi.number().required(),
-    content: joi.string().min(1).required(),
   });
 
   const validation = schema.validate(req.body);
@@ -20,10 +19,8 @@ exports.editTodo = async function editTodo(req, res) {
     return;
   }
 
-  // Borde kanske ha 2 edits - en för checkboxen och en för texten
-  // Dubbelkolla ID här
-  const sql = `update todo set content = ?, marked = ? where id = ?;`;
-  pool.execute(sql, [content, isChecked, listID], (error, result) => {
+  const sql = `update todo set marked = ? where id = ?;`;
+  pool.execute(sql, [isChecked, todoID], (error, result) => {
     if (error) {
       res.status(500).json(error);
       return;

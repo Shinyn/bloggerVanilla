@@ -116,7 +116,8 @@ async function addTodo(id, content, todoContainer) {
     },
   });
   if (respons.status === 201) {
-    const a = await respons.json();
+    const data = await respons.json();
+    console.log("data is", data);
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("todo-checkbox");
@@ -126,9 +127,18 @@ async function addTodo(id, content, todoContainer) {
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("todo-delete");
     deleteBtn.textContent = "Delete";
-    todoContainer.append(checkbox, p, deleteBtn);
 
-    // getLists();
+    const separatorDiv = document.createElement("div");
+    separatorDiv.append(checkbox, p, deleteBtn);
+    todoContainer.append(separatorDiv);
+
+    checkbox.addEventListener("change", function () {
+      if (this.checked) {
+        patchTodo(data.id, 1);
+      } else {
+        patchTodo(data.id, 0);
+      }
+    });
   }
 }
 
@@ -185,40 +195,65 @@ function showSelectedList() {
   populateTodos(value);
 }
 
+async function patchTodo(id, completed) {
+  const response = await fetch(`http://127.0.0.1:5050/todo`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      todoID: id,
+      isChecked: completed,
+    }),
+  });
+  if (!response.status === 200) {
+    console.log("Something went wrong");
+  }
+}
+
 // Checkboxen ska ha värdet som den har i databasen (Avbockad eller Ej)
-// Make sure the names make sense! LastChild
 async function populateTodos(id) {
   // Listan
   const todos = await getTodos(id);
-  // För varje element i listan
-  let lastChild = document.getElementById(id).lastChild;
+  // Hämtar div'en som alla todos ska vara i
+  let todoContainer = document.getElementById(id).lastChild;
   // Tömmer todos så det inte blir dubletter
-  lastChild.replaceChildren();
+  todoContainer.replaceChildren();
+  // För varje element i listan
   todos.forEach((todo) => {
     console.log(todo);
     const input = document.createElement("input");
     input.type = "checkbox";
+    input.classList.add("todo-checkbox");
     if (todo.marked === 1) {
       input.checked = true;
     }
 
+    // Lägger på en eventListener på checkbox och kör PATCH vid ändring
+    input.addEventListener("change", function () {
+      if (this.checked) {
+        patchTodo(todo.id, 1);
+      } else {
+        patchTodo(todo.id, 0);
+      }
+    });
+
     const p = document.createElement("p");
     p.textContent = todo.content;
+    p.classList.add("todo-text");
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add("todo-delete");
+
     const separatorDiv = document.createElement("div");
     separatorDiv.append(input, p, deleteBtn);
 
-    // Ska va tom, TÖM!
-
-    console.log(lastChild);
-    lastChild.append(separatorDiv);
+    todoContainer.append(separatorDiv);
   });
   // console.log("mina todos");
 }
-
-// //FIXME: Jag vill att när man klickar på en option i select drop-down'en så ska den genererade html snutten associerad med den visas.
 
 // // function logout() {
 // //   console.log("ska sätta cookien authtoken till ett datum som redan varit");
