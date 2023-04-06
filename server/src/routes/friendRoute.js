@@ -14,6 +14,6 @@ friendRoute.get("/added", getAddedFriends);
 
 friendRoute.get("/:id", getFriendLists);
 
-friendRoute.delete("/", deleteFriend);
+friendRoute.delete("/:id", deleteFriend);
 
 exports.friendRoute = friendRoute;

@@ -1,4 +1,3 @@
-"use strict";
 const joi = require("joi");
 const { pool } = require("../../database");
 

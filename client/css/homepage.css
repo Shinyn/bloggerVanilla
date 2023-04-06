@@ -80,13 +80,10 @@ body .users-container #users-p {
   font-size: 1rem;
   font-weight: 700;
 }
-body .users-container .generated-users:hover {
+body .users-container .generated-users:hover,
+body .users-container .generated-friends:hover {
   color: blue;
   cursor: pointer;
-}
-body .users-container .generated-users .friendListDiv > p {
-  background-color: red;
-  color: wheat;
 }
 
 h1 {

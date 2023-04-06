@@ -339,6 +339,10 @@ async function getAddedFriends() {
     data.forEach((friend) => {
       const friendContainer = document.createElement("div");
       friendContainer.classList.add("generated-friends");
+      friendContainer.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        deleteFriend(friend.friendID);
+      });
       friendContainer.addEventListener("click", function () {
         getFriendList(friend.friendID);
       });
@@ -366,11 +370,28 @@ async function getFriendList(id) {
       const friendListDiv = document.createElement("div");
       const p = document.createElement("p");
       p.textContent = list.listName;
-      friendListDiv.classList.add("friendListDiv");
+      friendListDiv.classList.add("generatedFriendListDiv");
       friendListDiv.append(p);
       friendsListsContainer.append(friendListDiv);
     });
   } else {
     alert(data);
+  }
+}
+
+async function deleteFriend(id) {
+  const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (response.status === 200) {
+    location.reload();
+  } else {
+    alert(data);
+    return;
   }
 }

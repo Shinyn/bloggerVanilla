@@ -90,15 +90,11 @@ body {
       font-weight: 700;
     }
 
-    .generated-users {
+    .generated-users,
+    .generated-friends {
       &:hover {
         color: blue;
         cursor: pointer;
-      }
-
-      .friendListDiv > p {
-        background-color: red;
-        color: wheat;
       }
     }
   }
