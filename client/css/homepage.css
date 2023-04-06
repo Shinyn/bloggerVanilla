@@ -146,4 +146,12 @@ button:hover {
   padding: 5px;
 }
 
+.generatedListMainDiv {
+  background-color: rgb(97, 89, 85);
+}
+.generatedListMainDiv .generatedListTodoBtn {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
 /*# sourceMappingURL=homepage.css.map */

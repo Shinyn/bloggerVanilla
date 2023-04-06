@@ -99,7 +99,7 @@ function populateContainer(list) {
   addTodoBtn.classList.add("generatedListTodoBtn");
 
   const deleteTodoListBtn = document.createElement("button");
-  deleteTodoListBtn.textContent = "Delete";
+  deleteTodoListBtn.textContent = "Delete List";
   deleteTodoListBtn.classList.add("generatedListDeleteBtn");
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("generatedListTodoDiv");
