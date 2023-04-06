@@ -120,8 +120,8 @@ async function addTodo(id, content, todoContainer) {
       "Content-type": "application/json",
     },
   });
+  const data = await respons.json();
   if (respons.status === 201) {
-    const data = await respons.json();
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("todo-checkbox");
@@ -133,6 +133,7 @@ async function addTodo(id, content, todoContainer) {
     deleteBtn.textContent = "Delete";
 
     const separatorDiv = document.createElement("div");
+    separatorDiv.classList.add("separatorDiv");
     separatorDiv.append(checkbox, p, deleteBtn);
     todoContainer.append(separatorDiv);
 
@@ -148,6 +149,9 @@ async function addTodo(id, content, todoContainer) {
         patchTodo(data.id, 0);
       }
     });
+  } else {
+    alert(data);
+    return;
   }
 }
 
@@ -280,6 +284,7 @@ async function populateTodos(id) {
     });
 
     const separatorDiv = document.createElement("div");
+    separatorDiv.classList.add("separatorDiv");
     separatorDiv.append(input, p, deleteBtn);
 
     todoContainer.append(separatorDiv);

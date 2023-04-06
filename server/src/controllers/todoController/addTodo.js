@@ -20,6 +20,9 @@ exports.addTodo = async function addTodo(req, res) {
     if (error && error.code === "ER_NO_REFERENCED_ROW_2") {
       res.status(404).json("That list does not exist");
       return;
+    } else if (error && error.code === "ER_DATA_TOO_LONG") {
+      res.status(500).json("Todo is to long, 255 characters max");
+      return;
     } else if (error) {
       res.status(500).json(error);
       return;

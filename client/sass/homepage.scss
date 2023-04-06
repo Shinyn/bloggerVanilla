@@ -61,7 +61,7 @@ body {
   .users-container {
     position: relative;
     width: 99%;
-    height: 100vh;
+    height: 30rem;
     background-color: royalblue;
 
     #friend-div,
@@ -82,7 +82,9 @@ body {
       right: 0;
     }
 
-    #users-p {
+    #users-p,
+    #friends-p,
+    #description-p {
       text-align: center;
       margin: 5px;
       border-bottom: 2px solid white;
@@ -129,6 +131,25 @@ button {
 .homepage-lists {
   bottom: 0;
   right: 0;
+
+  .todo-text {
+    padding: 10px;
+  }
+
+  .todo-delete {
+    padding: 10px;
+  }
+
+  .separatorDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.726);
+    border-radius: 8px;
+    background-color: rgb(12, 87, 87);
+  }
 }
 
 .generatedListForm {

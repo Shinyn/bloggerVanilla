@@ -55,7 +55,7 @@ body {
 body .users-container {
   position: relative;
   width: 99%;
-  height: 100vh;
+  height: 30rem;
   background-color: royalblue;
 }
 body .users-container #friend-div,
@@ -73,7 +73,9 @@ body .users-container #friend-div {
 body .users-container #users-div {
   right: 0;
 }
-body .users-container #users-p {
+body .users-container #users-p,
+body .users-container #friends-p,
+body .users-container #description-p {
   text-align: center;
   margin: 5px;
   border-bottom: 2px solid white;
@@ -114,6 +116,22 @@ button:hover {
 .homepage-lists {
   bottom: 0;
   right: 0;
+}
+.homepage-lists .todo-text {
+  padding: 10px;
+}
+.homepage-lists .todo-delete {
+  padding: 10px;
+}
+.homepage-lists .separatorDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.726);
+  border-radius: 8px;
+  background-color: rgb(12, 87, 87);
 }
 
 .generatedListForm {
