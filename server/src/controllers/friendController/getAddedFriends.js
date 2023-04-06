@@ -8,7 +8,9 @@ exports.getAddedFriends = function getAddedFriends(req, res) {
     return;
   }
 
-  const sql = `select friendID from friendship where userID = ?`;
+  const sql = `select u.username as user, u2.username as friend, f.friendID
+               from friendship f join users u on u.id = f.userID
+               join users u2 on u2.id = f.friendID where f.userID = ?`;
   pool.execute(sql, [currentUserID], (error, result) => {
     if (error) {
       res.status(500).json(error);

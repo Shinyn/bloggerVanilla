@@ -10,7 +10,7 @@ exports.addFriend = function addFriend(req, res) {
     return;
   }
 
-  if (currentUser == friendID) {
+  if (currentUser === friendID) {
     res.status(400).json("You cant add yourself");
     return;
   }
@@ -27,13 +27,14 @@ exports.addFriend = function addFriend(req, res) {
       return;
     }
 
-    const sql = `insert into friendship (userID, friendID) values (?, ?);`;
+    const sql = `insert ignore into friendship (userID, friendID) values (?, ?);`;
     pool.execute(sql, [currentUser, friendID], (error, result) => {
-      if (error && error.code === "ER_DUP_ENTRY") {
-        res.status(500).json("You already have that friend in your friendlist");
-        return;
-      } else if (error) {
+      if (error) {
         res.status(500).json(error);
+        return;
+      }
+      if (result.warningStatus === 1) {
+        res.status(500).json("You already have that friend in your friendlist");
         return;
       }
       res.status(200).json("Added friend");

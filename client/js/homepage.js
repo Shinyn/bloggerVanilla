@@ -3,6 +3,7 @@ const addListBtn = document.querySelector("#addListBtn");
 const listSelect = document.querySelector("#listSelect");
 const usersContainer = document.querySelector("#users-container");
 const addedFriendsContainer = document.querySelector("#friends-container");
+const friendsListsContainer = document.querySelector("#friendLists");
 getLists();
 getUsers();
 getAddedFriends();
@@ -70,7 +71,6 @@ async function getLists() {
         populateSelect(list);
         populateContainer(list);
       });
-      // getTodos(list.id);
       return;
     }
     alert("Something went wrong");
@@ -299,13 +299,11 @@ async function getUsers() {
 
   if (response.status === 200) {
     const data = await response.json();
-    console.log("Here are the users:", data);
     data.forEach((user) => {
       const p = document.createElement("p");
       p.textContent = user.username;
       p.classList.add("generated-users");
       p.addEventListener("click", function () {
-        console.log("clicked user", user.id);
         addFriend(user.id);
       });
       usersContainer.append(p);
@@ -323,7 +321,7 @@ async function addFriend(id) {
   });
   const data = await response.json();
   if (response.status === 200) {
-    alert("Friend added");
+    location.reload();
   } else {
     alert(data);
     return;
@@ -339,16 +337,44 @@ async function getAddedFriends() {
     },
   });
   const data = await response.json();
-  console.log(data);
+  console.log("Data is:", data);
   if (response.status === 200) {
     data.forEach((friend) => {
-      console.log(friend);
-      // TODO: Behöver usename istället för id här - kanske ändra queryn till databasen med join och så. För trött just nu..
-      addedFriendsContainer.append(friend.friendID);
+      console.log("Friends you have:", friend);
+      const friendContainer = document.createElement("div");
+      friendContainer.classList.add("generated-friends");
+      friendContainer.addEventListener("click", function () {
+        console.log("clicked friend", friend.friend);
+        getFriendList(friend.friendID);
+      });
+      friendContainer.append(friend.friend);
+      addedFriendsContainer.append(friendContainer);
     });
   } else {
     alert(data);
     return;
+  }
+}
+
+async function getFriendList(id) {
+  const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (response.status === 200) {
+    console.log("Data from getFriendList", data);
+    data.forEach((list) => {
+      console.log("listname is:", list.listName);
+      const friendListDiv = document.createElement("div");
+      friendListDiv.append(list.listName);
+      friendsListsContainer.append(friendListDiv);
+    });
+  } else {
+    alert(data);
   }
 }
 // // function logout() {
