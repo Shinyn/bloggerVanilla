@@ -84,6 +84,10 @@ body .users-container .generated-users:hover {
   color: blue;
   cursor: pointer;
 }
+body .users-container .generated-users .friendListDiv > p {
+  background-color: red;
+  color: wheat;
+}
 
 h1 {
   background-color: rgba(6, 30, 84, 0.59);

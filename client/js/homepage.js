@@ -137,7 +137,6 @@ async function addTodo(id, content, todoContainer) {
     todoContainer.append(separatorDiv);
 
     deleteBtn.addEventListener("click", function () {
-      console.log("clicked delete");
       deleteTodo(data.id);
       getTodos(id);
     });
@@ -251,7 +250,6 @@ async function populateTodos(id) {
   todoContainer.replaceChildren();
   // För varje element i listan
   todos.forEach((todo) => {
-    console.log("Todo from forEach loop:", todo);
     const input = document.createElement("input");
     input.type = "checkbox";
     input.classList.add("todo-checkbox");
@@ -337,14 +335,11 @@ async function getAddedFriends() {
     },
   });
   const data = await response.json();
-  console.log("Data is:", data);
   if (response.status === 200) {
     data.forEach((friend) => {
-      console.log("Friends you have:", friend);
       const friendContainer = document.createElement("div");
       friendContainer.classList.add("generated-friends");
       friendContainer.addEventListener("click", function () {
-        console.log("clicked friend", friend.friend);
         getFriendList(friend.friendID);
       });
       friendContainer.append(friend.friend);
@@ -365,21 +360,17 @@ async function getFriendList(id) {
     },
   });
   const data = await response.json();
+  friendsListsContainer.replaceChildren();
   if (response.status === 200) {
-    console.log("Data from getFriendList", data);
     data.forEach((list) => {
-      console.log("listname is:", list.listName);
       const friendListDiv = document.createElement("div");
-      friendListDiv.append(list.listName);
+      const p = document.createElement("p");
+      p.textContent = list.listName;
+      friendListDiv.classList.add("friendListDiv");
+      friendListDiv.append(p);
       friendsListsContainer.append(friendListDiv);
     });
   } else {
     alert(data);
   }
 }
-// // function logout() {
-// //   console.log("ska sätta cookien authtoken till ett datum som redan varit");
-// // }
-
-// const content = listSelect.options[listSelect.selectedIndex].text;
-// Behövs för att göra GET till todos
