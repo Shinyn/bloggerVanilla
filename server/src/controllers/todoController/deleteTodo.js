@@ -16,7 +16,6 @@ exports.deleteTodo = async function deleteTodo(req, res) {
   const sql = `delete from todo where id = ?;`;
   pool.execute(sql, [id], (error, result) => {
     if (error) {
-      console.log(error);
       res.status(500).json(error);
       return;
     }

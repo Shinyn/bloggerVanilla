@@ -141,4 +141,9 @@ button:hover {
   align-items: flex-start;
 }
 
+.generated-input {
+  margin: 10px;
+  padding: 5px;
+}
+
 /*# sourceMappingURL=homepage.css.map */

@@ -15,35 +15,39 @@ listSelect.addEventListener("change", (e) => {
 
 addListBtn.addEventListener("click", async (e) => {
   const userInput = listNameInput.value;
-  const response = await fetch("http://127.0.0.1:5050/todoList", {
-    method: "POST",
-    body: JSON.stringify({ userInput }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  try {
+    const response = await fetch("http://127.0.0.1:5050/todoList", {
+      method: "POST",
+      body: JSON.stringify({ userInput }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-  const data = await response.json();
-  if (response.status === 201) {
-    getLists();
-    const addTodoBtns = document.querySelectorAll(".generatedListTodoBtn");
+    const data = await response.json();
+    if (response.status === 201) {
+      getLists();
+      const addTodoBtns = document.querySelectorAll(".generatedListTodoBtn");
 
-    addTodoBtns.forEach((btn) => {
-      btn.addEventListener("click", async (e) => {
-        const todo = document.createElement("div");
-        todo.classList.add("generatedTodo");
-        todo.innerHTML = `
+      addTodoBtns.forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+          const todo = document.createElement("div");
+          todo.classList.add("generatedTodo");
+          todo.innerHTML = `
             <input type="checkbox" class="todo-checkbox" />
             <p class="todo-text"> text here </p>
             <button class="todo-delete">Delete</button>
         `;
-        const list = document.querySelector(".generatedListForm");
-        list.appendChild(todo);
+          const list = document.querySelector(".generatedListForm");
+          list.appendChild(todo);
+        });
       });
-    });
-  } else {
-    alert(data);
+    } else {
+      alert(data);
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 });
 
@@ -88,6 +92,8 @@ function populateContainer(list) {
   p.textContent = list.listName;
 
   const input = document.createElement("input");
+  input.classList.add("generated-input");
+  input.placeholder = "Content..";
   const addTodoBtn = document.createElement("button");
   addTodoBtn.textContent = "Add Todo";
   addTodoBtn.classList.add("generatedListTodoBtn");
@@ -97,6 +103,10 @@ function populateContainer(list) {
   deleteTodoListBtn.classList.add("generatedListDeleteBtn");
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("generatedListTodoDiv");
+
+  const containerDiv = document.createElement("div");
+  containerDiv.classList.add("generated-container-div");
+  containerDiv.append();
 
   html.append(p, input, addTodoBtn, deleteTodoListBtn, todoDiv);
 
@@ -108,82 +118,92 @@ function populateContainer(list) {
 }
 
 async function addTodo(id, content, todoContainer) {
-  const respons = await fetch("http://127.0.0.1:5050/todo", {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify({
-      listID: id,
-      content: content,
-    }),
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
-  const data = await respons.json();
-  if (respons.status === 201) {
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("todo-checkbox");
-    const p = document.createElement("p");
-    p.textContent = content;
-    p.classList.add("todo-text");
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("todo-delete");
-    deleteBtn.textContent = "Delete";
-
-    const separatorDiv = document.createElement("div");
-    separatorDiv.classList.add("separatorDiv");
-    separatorDiv.append(checkbox, p, deleteBtn);
-    todoContainer.append(separatorDiv);
-
-    deleteBtn.addEventListener("click", function () {
-      deleteTodo(data.id);
-      getTodos(id);
+  try {
+    const respons = await fetch("http://127.0.0.1:5050/todo", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({
+        listID: id,
+        content: content,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
     });
+    const data = await respons.json();
+    if (respons.status === 201) {
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.classList.add("todo-checkbox");
+      const p = document.createElement("p");
+      p.textContent = content;
+      p.classList.add("todo-text");
+      const deleteBtn = document.createElement("button");
+      deleteBtn.classList.add("todo-delete");
+      deleteBtn.textContent = "Delete";
 
-    checkbox.addEventListener("change", function () {
-      if (this.checked) {
-        patchTodo(data.id, 1);
-      } else {
-        patchTodo(data.id, 0);
-      }
-    });
-  } else {
-    alert(data);
-    return;
+      const separatorDiv = document.createElement("div");
+      separatorDiv.classList.add("separatorDiv");
+      separatorDiv.append(checkbox, p, deleteBtn);
+      todoContainer.append(separatorDiv);
+
+      deleteBtn.addEventListener("click", function () {
+        deleteTodo(data.id);
+        getTodos(id);
+      });
+
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
+          patchTodo(data.id, 1);
+        } else {
+          patchTodo(data.id, 0);
+        }
+      });
+    } else {
+      alert(data);
+      return;
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
 async function deleteTodoList(id) {
-  const respons = await fetch(`http://127.0.0.1:5050/todoList/${id}`, {
-    method: "DELETE",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
+  try {
+    const respons = await fetch(`http://127.0.0.1:5050/todoList/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
 
-  if (respons.status === 200) {
-    getLists();
-    //FIXME:
-    // Förmodligen ett dåligt sätt att göra det på men det funkar - METIN
-    // location.reload();
+    if (respons.status === 200) {
+      getLists();
+      return;
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
 async function deleteTodo(id) {
-  const respons = await fetch(`http://127.0.0.1:5050/todo/${id}`, {
-    method: "DELETE",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
+  try {
+    const respons = await fetch(`http://127.0.0.1:5050/todo/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
 
-  if (respons.status === 200) {
-    getLists();
-  } else {
-    alert(respons.statusText);
+    if (respons.status === 200) {
+      getLists();
+    } else {
+      alert(respons.statusText);
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
@@ -230,30 +250,33 @@ function showSelectedList() {
 }
 
 async function patchTodo(id, completed) {
-  const response = await fetch(`http://127.0.0.1:5050/todo`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      todoID: id,
-      isChecked: completed,
-    }),
-  });
-  if (!response.status === 200) {
-    console.log("Something went wrong");
+  try {
+    const response = await fetch(`http://127.0.0.1:5050/todo`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        todoID: id,
+        isChecked: completed,
+      }),
+    });
+    const data = await response.json();
+    if (!response.status === 200) {
+      alert(data);
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
 async function populateTodos(id) {
-  // Listan
   const todos = await getTodos(id);
   // Hämtar div'en som alla todos ska vara i
   let todoContainer = document.getElementById(id).lastChild;
   // Tömmer todos så det inte blir dubletter
   todoContainer.replaceChildren();
-  // För varje element i listan
   todos.forEach((todo) => {
     const input = document.createElement("input");
     input.type = "checkbox";
@@ -293,111 +316,133 @@ async function populateTodos(id) {
 }
 
 async function getUsers() {
-  const response = await fetch("http://127.0.0.1:5050/friends", {
-    method: "GET",
-    headers: {
-      "content-type": "application/json",
-    },
-    credentials: "include",
-  });
-
-  if (response.status === 200) {
-    const data = await response.json();
-    data.forEach((user) => {
-      const p = document.createElement("p");
-      p.textContent = user.username;
-      p.classList.add("generated-users");
-      p.addEventListener("click", function () {
-        addFriend(user.id);
-      });
-      usersContainer.append(p);
+  try {
+    const response = await fetch("http://127.0.0.1:5050/friends", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
     });
+
+    const data = await response.json();
+    if (response.status === 200) {
+      data.forEach((user) => {
+        const p = document.createElement("p");
+        p.textContent = user.username;
+        p.classList.add("generated-users");
+        p.addEventListener("click", function () {
+          addFriend(user.id);
+        });
+        usersContainer.append(p);
+      });
+    } else {
+      alert(data);
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
 async function addFriend(id) {
-  const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const data = await response.json();
-  if (response.status === 200) {
-    location.reload();
-  } else {
-    alert(data);
-    return;
+  try {
+    const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (response.status === 200) {
+      location.reload();
+    } else {
+      alert(data);
+      return;
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
 async function getAddedFriends() {
-  const response = await fetch("http://127.0.0.1:5050/friends/added", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const data = await response.json();
-  if (response.status === 200) {
-    data.forEach((friend) => {
-      const friendContainer = document.createElement("div");
-      friendContainer.classList.add("generated-friends");
-      friendContainer.addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        deleteFriend(friend.friendID);
-      });
-      friendContainer.addEventListener("click", function () {
-        getFriendList(friend.friendID);
-      });
-      friendContainer.append(friend.friend);
-      addedFriendsContainer.append(friendContainer);
+  try {
+    const response = await fetch("http://127.0.0.1:5050/friends/added", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
     });
-  } else {
-    alert(data);
-    return;
+    const data = await response.json();
+    if (response.status === 200) {
+      data.forEach((friend) => {
+        const friendContainer = document.createElement("div");
+        friendContainer.classList.add("generated-friends");
+        friendContainer.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          deleteFriend(friend.friendID);
+        });
+        friendContainer.addEventListener("click", function () {
+          getFriendList(friend.friendID);
+        });
+        friendContainer.append(friend.friend);
+        addedFriendsContainer.append(friendContainer);
+      });
+    } else {
+      alert(data);
+      return;
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
 async function getFriendList(id) {
-  const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const data = await response.json();
-  friendsListsContainer.replaceChildren();
-  if (response.status === 200) {
-    data.forEach((list) => {
-      const friendListDiv = document.createElement("div");
-      const p = document.createElement("p");
-      p.textContent = list.listName;
-      friendListDiv.classList.add("generatedFriendListDiv");
-      friendListDiv.append(p);
-      friendsListsContainer.append(friendListDiv);
+  try {
+    const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
     });
-  } else {
-    alert(data);
+    const data = await response.json();
+    friendsListsContainer.replaceChildren();
+    if (response.status === 200) {
+      data.forEach((list) => {
+        const friendListDiv = document.createElement("div");
+        const p = document.createElement("p");
+        p.textContent = list.listName;
+        friendListDiv.classList.add("generatedFriendListDiv");
+        friendListDiv.append(p);
+        friendsListsContainer.append(friendListDiv);
+      });
+    } else {
+      alert(data);
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
 
 async function deleteFriend(id) {
-  const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
-    method: "DELETE",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const data = await response.json();
-  if (response.status === 200) {
-    location.reload();
-  } else {
-    alert(data);
-    return;
+  try {
+    const response = await fetch(`http://127.0.0.1:5050/friends/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (response.status === 200) {
+      location.reload();
+    } else {
+      alert(data);
+      return;
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error);
   }
 }
