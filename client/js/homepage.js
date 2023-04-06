@@ -15,7 +15,7 @@ listSelect.addEventListener("change", (e) => {
 
 addListBtn.addEventListener("click", async (e) => {
   const userInput = listNameInput.value;
-  const addedTodoList = await fetch("http://127.0.0.1:5050/todoList", {
+  const response = await fetch("http://127.0.0.1:5050/todoList", {
     method: "POST",
     body: JSON.stringify({ userInput }),
     headers: {
@@ -24,7 +24,8 @@ addListBtn.addEventListener("click", async (e) => {
     credentials: "include",
   });
 
-  if (addedTodoList.status === 201) {
+  const data = await response.json();
+  if (response.status === 201) {
     getLists();
     const addTodoBtns = document.querySelectorAll(".generatedListTodoBtn");
 
@@ -41,10 +42,8 @@ addListBtn.addEventListener("click", async (e) => {
         list.appendChild(todo);
       });
     });
-  } else if (addedTodoList.status === 411) {
-    alert(addedTodoList.statusText);
   } else {
-    alert("Something went wrong");
+    alert(data);
   }
 });
 
@@ -183,6 +182,8 @@ async function deleteTodo(id) {
 
   if (respons.status === 200) {
     getLists();
+  } else {
+    alert(respons.statusText);
   }
 }
 

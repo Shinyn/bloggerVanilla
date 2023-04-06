@@ -7,12 +7,12 @@ exports.addList = async function addList(req, res) {
   const { userInput } = req.body;
 
   const schema = joi.object({
-    userInput: joi.string().required(),
+    userInput: joi.string().min(1).max(50).required(),
   });
   const validation = schema.validate(req.body);
 
   if (validation.error) {
-    res.status(400).json(validation.error.details[0].message);
+    res.status(400).json("Listname must be between 1 and 50 characters long");
     return;
   }
 

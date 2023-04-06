@@ -5,7 +5,7 @@ exports.addTodo = async function addTodo(req, res) {
   const { listID, content } = req.body;
   const schema = joi.object({
     listID: joi.number().required(),
-    content: joi.string().min(1).required(),
+    content: joi.string().min(1).max(255).required(),
   });
 
   const validation = schema.validate(req.body);
